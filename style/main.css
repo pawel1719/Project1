@@ -1,0 +1,170 @@
+*, *::after, *::before{    
+	margin: 0;    
+	padding: 0;
+}
+
+/*  This pattern is downloaded from www.toptal.com/designers/subtlepatterns/  
+	If you need more, that's where to get'em. */
+
+body{    
+	display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100vw;
+    height: 100vh; 
+	background-image:url("./contrast_linen.png"); 
+}
+
+
+/* Login form */
+.login{    
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    margin-top: 60px;
+    font-size: 15px;
+    width: 80%;
+    min-height: 150px;
+    padding: 15px;
+    background-color:rgba(255, 255, 255, 0.4);
+    border: 1px solid #000;
+}
+
+/* labels */
+.login__label{    
+	color: #FFF;    
+	text-align: left;    
+	width: 80%;
+}
+.login__label--margin{    
+	margin-left: 10px;
+}
+.login__label--width{    
+	width: auto;
+}
+/* Inputs */
+.login__input{    
+	display: flex;    
+	align-items: center;    
+	justify-content: center;    
+	
+	width: 80%;    
+	background-color: rgba(0, 0, 0, 0.7);    
+	margin-bottom: 15px;    
+	box-sizing: border-box;    
+	color: #FFF;    
+	padding: 7px;    
+	border: none;
+}
+
+.login__input::placeholder{    
+	color: #FFF;    
+	opacity: 0.7;    
+}
+
+/* Buttons */
+.login__container{    
+	display: flex;    
+	justify-content: space-between;    
+	align-items: center;    
+	width: 80%;    
+	margin-bottom: 20px;
+}
+
+.login__container--justify{   
+	justify-content: stretch;
+}
+
+.login__container--size{    
+	font-size: 18px;
+}
+
+.login__button{    
+	padding: 3px 0;    
+	border: none;    
+	border-radius: 25px;    
+	min-height: 30px;    
+	width: 45%;    
+	background-color: rgb(161, 201, 211);    
+	transition: background-color 0.1s ease-in-out;    
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.login__button--transparentBackground{    
+	background-color: transparent;
+}
+
+.login__backButton{    
+	display: flex;    
+	align-self: flex-start;    
+	margin-left: 10%;    
+	margin-bottom: 10px;    
+	background: transparent;    
+	padding: 5px;    
+	border-radius: 25px 0 0 25px;    
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.login__backButton:hover{    
+	text-decoration: underline;
+}
+
+.login__button:hover{    
+	cursor: pointer;    
+	background-color: rgb(165, 206, 216);
+}
+
+/* Link */
+.login__link{    
+	color: #000;   
+	width: 100%;    
+	height: 100%;
+}
+
+.login__link--color{    
+	color: #FFF;
+}
+
+.login__link--decoration{    
+	text-decoration: none;
+}
+
+/* Messeges(alert, info, success) */
+.login__message{    
+	box-sizing: border-box;    
+	margin-top: 10px;    
+	border: 0.5px solid black;    
+	width: 80%;    
+	margin-bottom: 15px;    
+	min-height: 30px;    
+	line-height: 30px;    
+	padding: 5px;
+}
+
+.login__message--alert{    
+	border-color: #F00;    
+	background-color: rgba(255, 0, 0, 0.2);    
+	color: #F00;
+}
+
+.login__message--info{    
+	border-color: #00F;    
+	background-color: rgba(0, 0, 255, 0.2);    
+	color: #00F;
+}
+
+.login__message--success{    
+	border-color: #0F0;    
+	background-color: rgba(0, 255, 0, 0.2);    
+	color: #0F0;
+}
+
+/* Rules for screen with width bigger than 425px */
+@media only screen and (min-width: 425px){    
+	.login{        
+		width: 300px;    
+	}
+}
