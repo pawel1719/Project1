@@ -1,3 +1,13 @@
+<?php
+	require_once 'classes\Input.php';
+	require_once 'classes\Session.php';
+	require_once 'classes\Validate.php';
+	require_once 'classes\User.php';
+	require_once 'classes\Token.php';
+	require_once 'classes\DB.php';
+	require_once 'classes\config.php';
+?>
+
 <HTML lang="pl">
 <HEAD>
 
@@ -9,15 +19,6 @@
 	<form method="POST" class="login">
 	
 <?php
-//include_once 'inc.menu.html';
-
-require_once 'classes\Input.php';
-require_once 'classes\Session.php';
-require_once 'classes\Validate.php';
-require_once 'classes\User.php';
-require_once 'classes\Token.php';
-require_once 'classes\DB.php';
-require_once 'classes\config.php';
 
 	$user = new User();
 	//case when user is logged
@@ -28,6 +29,7 @@ require_once 'classes\config.php';
 	if(Input::exists()) {
 		if(Token::check(Input::get('token'))) {
 			
+			//valiate for inputs
 			$validate = new Validate();
 			$validation = $validate->check($_POST, array(
 				'username' => array('required' => true),
@@ -73,7 +75,7 @@ require_once 'classes\config.php';
 ?>
 
 	
-	
+		<!-- input to form -->
 		<input placeholder="Username" type="text" class="login__input" name="username" />
 		
 		<input placeholder="Password" type="password" class="login__input" name="password" />	

@@ -20,16 +20,16 @@
 
 <?php
 
-	//include 'inc.menu.html';
-
 	$user = new User();
+	//redirect if is logged
 	if($user->isLoggedIn()) {
 		header('Location: home.php');
 	}
 	
 	if(Input::exists()) {
-		
 		if(Token::check(Input::get('token'))) {
+
+			//validate for inputs register
 			$validate = new Validate();
 			$validation = $validate->check($_POST, array(
 				'username' => array(
@@ -123,6 +123,7 @@
 						'consent_rodo' => Input::get('consent_rodo')
 					));
 
+					//message to the user who successfully finish register
 					$HTML = '
 					<HTML><HEAD></HEAD>
 					<BODY>
@@ -139,6 +140,7 @@
 					$send = new SendMail(true);
 					$send->createMessage( Input::get('email'), Input::get('Name') .' '. Input::get('surname'), 'Witaj w naszym portalu!', $HTML);
 					
+					//clean the variables
 					Input::destroy('username');
 					Input::destroy('password');
 					Input::destroy('password_again');
