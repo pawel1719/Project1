@@ -7,7 +7,7 @@ class Hash {
 	}
 	
 	public static function salt($length) {
-		return self::randString($length);;	
+		return self::randString($length);
 	}
 	
 	public static function unique() {
