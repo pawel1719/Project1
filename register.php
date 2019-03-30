@@ -1,19 +1,21 @@
 <?php 
-	require_once 'classes/Validate.php';
-	require_once 'classes/Input.php';
-	require_once 'classes/DB.php';
-	require_once 'classes/Token.php';
-	require_once 'classes/Sanitize.php';
-	require_once 'classes/Hash.php';
-	require_once 'classes/User.php';
-	require_once 'classes/Session.php';
-	require_once 'classes/SendMail.php';
+	require_once 'classes/config.php';
+	require_once PATH_TO_CLASSES_VALIDATE;
+	require_once PATH_TO_CLASSES_INPUT;
+	require_once PATH_TO_CLASSES_DB;
+	require_once PATH_TO_CLASSES_TOKEN;
+	require_once PATH_TO_CLASSES_SANITIZE;
+	require_once PATH_TO_CLASSES_HASH;
+	require_once PATH_TO_CLASSES_USER;
+	require_once PATH_TO_CLASSES_SESSION;
+	require_once PATH_TO_CLASSES_SENDMAIL;
 ?>
+
 <!DOCTYPE html>
 <HTML lang="pl-PL">
 <HEAD>
 
-	<?php include_once 'inc.head.html'; ?>
+	<?php include_once PATH_TO_HEAD; ?>
 
 </HEAD>
 <BODY>
@@ -100,10 +102,12 @@
 			));
 		
 			if($validation->passed()) {
-				$salt = Hash::salt(32);
+				//generate hash to password
+				$salt = Hash::salt(80);
 				
+
 				try {
-					
+					//adding user information to database
 					$user->create(array(
 						'username' => Input::get('username'),
 						'password' => Hash::make(Input::get('password'), $salt),
@@ -155,26 +159,29 @@
 					Input::destroy('no_flat');
 					Input::destroy('consent_rodo');
 					
+					//sending information about successful login and redirect to the login page
 					Session::flash('user_information', 'You have been registered and can now you log in!');
 					header('Location: index.php');
 				
 				} catch(Exception $e) {
 					die($e->getMessage());
 				}
+
 			} else {
 				//error from validation
 				echo '<div class="login__message login__message--alert">';
 				
 				foreach($validation->errors() as $error => $details) {
 					echo $details . '<br />';
-				}
-				
+				}//end loop
 				echo '</div>';
 			}
 		}
 	}
 
 ?>
+
+	<!-- beginning of registration form -->
 	<form method="POST" class="login">
 
 		<button class="login__backButton">            
@@ -217,6 +224,7 @@
 		<label for="no_flat" class="login__label">Numer mieszkania:</label>
 		<input type="text" name="no_flat" value="<?php echo Sanitize::escape(Input::get('no_flat')); ?>" class="login__input" />
 
+		<!-- back button to login page -->
 		<div class="login__container login__container--justify">	
 			<input type="checkbox" name="consent_rodo" value="1" /> 
 			<label for="consent_rodo" class="login__label login__label--margin">Akceptuję <a href="#" class="login__link login__link--color">regulamin</a></label>

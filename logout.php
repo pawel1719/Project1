@@ -1,6 +1,7 @@
 <?php
-	require_once 'classes\User.php';
-	require_once 'classes\Session.php';
+	require_once 'classes\config.php';
+	require_once PATH_TO_CLASSES_USER;
+	require_once PATH_TO_CLASSES_SESSION;
 
 	$user = new User();
 	$user->logout();

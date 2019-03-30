@@ -1,9 +1,10 @@
 <?php 
-	require_once 'classes/Validate.php';
-	require_once 'classes/Input.php';
-	require_once 'classes/DB.php';
-	require_once 'classes/User.php';
-	require_once 'classes/Session.php';
+	require_once 'classes/config.php';
+	require_once PATH_TO_CLASSES_VALIDATE;
+	require_once PATH_TO_CLASSES_INPUT;
+	require_once PATH_TO_CLASSES_DB;
+	require_once PATH_TO_CLASSES_USER;
+	require_once PATH_TO_CLASSES_SESSION;
 
 	//checking that user is logged
 	$user = new User();
@@ -14,12 +15,15 @@
 ?>
 <HTML lang="pl-PL">
 <HEAD>
-	<?php include_once 'inc.head.html'; ?>
+
+	<?php include_once PATH_TO_HEAD; ?>
+
 </HEAD>
 <BODY>
 
 <?php
-	include 'inc.menu.html';
+
+	include_once PATH_TO_MENU;
 
 	$db = DB::getInstance()->query('SELECT * FROM `question` GROUP BY Question ASC');
 	

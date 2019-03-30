@@ -1,6 +1,7 @@
 <?php
-require_once 'DB.php';
-require_once 'Sanitize.php';
+require_once 'config.php';
+require_once PATH_TO_DB;
+require_once PATH_TO_SANITIZE;
 
 class Validate {
 	private $_passed = false,

@@ -3,6 +3,7 @@
 class Hash {
 	
 	public static function make($string, $salt = '') {
+		//return hashing string with salt
 		return hash('sha256', $string . $salt);
 	}
 	
@@ -15,16 +16,16 @@ class Hash {
 	}
 
 	public static function randString($length, $chose = 0) {
-		//chars to random
+		//charsets arrays to random
 		$option = [
-			'qwertyuioplkjhgfdsazxcvbnmMNBVCXZASDFGHJKLPOIUYTREWQ1234567890<>+-*[]{}&(),.',
-			'qwertyuioplkjhgfdsazxcvbnmMNBVCXZASDFGHJKLPOIUYTREWQ1234567890',
-			'qwertyuioplkjhgfdsazxcvbnmMNBVCXZASDFGHJKLPOIUYTREWQ',
-			'1234567890'
+			'qwertyuioplkjhgfdsazxcvbnmMNBVCXZASDFGHJKLPOIUYTREWQ1234567890+-*[]{}(),.=_',	// 0
+			'qwertyuioplkjhgfdsazxcvbnmMNBVCXZASDFGHJKLPOIUYTREWQ1234567890',				// 1
+			'qwertyuioplkjhgfdsazxcvbnmMNBVCXZASDFGHJKLPOIUYTREWQ',							// 2
+			'1234567890'																	// 3
 		];
-		$chars = $option[$chose];
-		$result = '';
-		$length_string = strlen($chars);
+		$chars 			= $option[$chose];
+		$result 		= '';
+		$length_string 	= strlen($chars);
 
 		//random charset from string
 		for($i=0; $i<$length; $i++) {

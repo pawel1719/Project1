@@ -1,8 +1,10 @@
 <?php 
 require('phpmailer/class.phpmailer.php');
 require('phpmailer/class.smtp.php');
-require_once('DB.php');
-require_once('Sanitize.php');
+
+require_once 'config.php';
+require_once PATH_TO_DB;
+require_once PATH_TO_SANITIZE;
 
 
 class SendMail {

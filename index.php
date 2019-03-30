@@ -1,23 +1,23 @@
 <?php
-	require_once 'classes\Input.php';
-	require_once 'classes\Session.php';
-	require_once 'classes\Validate.php';
-	require_once 'classes\User.php';
-	require_once 'classes\Token.php';
-	require_once 'classes\DB.php';
 	require_once 'classes\config.php';
+	require_once PATH_TO_CLASSES_INPUT;
+	require_once PATH_TO_CLASSES_SESSION;
+	require_once PATH_TO_CLASSES_VALIDATE;
+	require_once PATH_TO_CLASSES_USER;
+	require_once PATH_TO_CLASSES_TOKEN;
+	require_once PATH_TO_CLASSES_DB;
 ?>
 
 <HTML lang="pl">
 <HEAD>
 
-	<?php include_once 'inc.head.html'; ?>
+	<?php include_once PATH_TO_HEAD; ?>
 	
 </HEAD>
 <BODY>
 
 	<form method="POST" class="login">
-	
+		
 <?php
 
 	$user = new User();
@@ -49,7 +49,7 @@
 				} else {
 					//counter faild login
 					$user->counterLogin('counter_failed_logged', 'last_failed_logged',Input::get('username'));
-					//error log in
+					//error login
 					Session::flash('faild_login', 'Niepoprawny login lub hasło!');
 					if(Session::exist('faild_login')) {
 						echo '<div class="login__message login__message--alert">'. Session::flash('faild_login') .'</div>';
@@ -61,13 +61,12 @@
 				
 				foreach($validation->errors() as $error) {
 					echo $error . '<br />';
-				}
-				
+				}//end loop			
 				echo '</div>';
 			}
 		}
 	}
-
+	//information from user
 	if(Session::exist('user_information')) {
 		echo '<div class="login__message login__message--info">'. Session::flash('user_information') .'</div>';
 	}
@@ -83,7 +82,8 @@
 		<input type="hidden" name="token" value="<?php echo Token::generate(); ?>" />
 		
 		<div class="login__container">
-		
+
+			<!-- redirection to register -->
 			<button class="login__button login__button--transparentBackground">
 				<a href="register.php" class="login__link login__link--decoration">Rejestracja</a>
 			</button>

@@ -1,8 +1,8 @@
 <?php
-require_once('DB.php');
-require_once('Hash.php');
-require_once('Session.php');
-require_once('config.php');
+require_once 'config.php';
+require_once PATH_TO_DB;
+require_once PATH_TO_HASH;
+require_once PATH_TO_SESSION;
 
 class User {
 	private $_db,

@@ -1,5 +1,6 @@
 <?php
-require_once 'Session.php';
+require_once 'Config.php';
+require_once PATH_TO_SESSION;
 
 class Token {
 	

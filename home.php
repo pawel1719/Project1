@@ -1,18 +1,21 @@
+<?php
+	require_once 'classes\config.php';
+	require_once PATH_TO_CLASSES_SESSION;
+	require_once PATH_TO_CLASSES_USER;
+	require_once PATH_TO_CLASSES_SANITIZE;
+?>
 <!doctype html>
 <HTML lang="pl-PL">
 <HEAD>
 
-	<?php include_once 'inc.head.html'; ?>
+	<?php include_once PATH_TO_HEAD; ?>
 
 </HEAD>
 <BODY>
 
 <?php 
-	include_once 'inc.menu.html';
+	include_once PATH_TO_MENU;
 
-	require_once 'classes\Session.php';
-	require_once 'classes\User.php';
-	require_once 'classes\Sanitize.php';
 
 	if(Session::exist('register') || Session::exist('welcome')) {
 		echo Session::flash('register');

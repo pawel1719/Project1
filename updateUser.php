@@ -1,18 +1,18 @@
 <HTML>
 <HEAD>
-	<?php include_once 'inc.head.html'; ?>
+	<?php include_once PATH_TO_HEAD; ?>
 </HEAD>
 <BODY>
 <?php
-include_once 'inc.menu.html';
+include_once PATH_TO_MENU;
 
-require_once 'classes\Input.php';
-require_once 'classes\Session.php';
-require_once 'classes\Validate.php';
-require_once 'classes\User.php';
-require_once 'classes\Token.php';
-require_once 'classes\DB.php';
 require_once 'classes\config.php';
+require_once PATH_TO_CLASSES_INPUT;
+require_once PATH_TO_CLASSES_SESSION;
+require_once PATH_TO_CLASSES_VALIADTE;
+require_once PATH_TO_CLASSES_USER;
+require_once PATH_TO_CLASSES_TOKEN;
+require_once PATH_TO_CLASSES_DB;
 
 	$user = new User();
 	//checking that user is logged
