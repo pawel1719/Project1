@@ -124,6 +124,13 @@ class DB {
 		
 		return false;
 	}//end function UPDATE()
+
+	public function toJSON($table, $where  = array('ID', '>', '0'), $select = 'SELECT *') {
+		$query = $this->action( $select, $table, $where);
+
+		//convert data from table to JSON
+		return json_encode($query->_results);
+	}
 	
 	public function results() {
 		return $this->_results;

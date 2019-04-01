@@ -10,62 +10,19 @@
     <script src="JS/ajax.js"></script> 
 
 </HEAD>
-<BODY>
-    <!-- JavaScript testy -->
-    
-    <script>
-        
-        function myData() {
-            let xhr = new XMLHttpRequest();
-            xhr.open("GET", "JS/Request/Queue.php", true);
-
-            //successfuly connection
-            xhr.addEventListener('load', function() {
-                if(this.status === 200) {
-                    var myObj = JSON.parse(this.responseText);
-                    var result = '';
-
-                    myObj.forEach(function(Queue) {
-                        result += '<option value="' + Queue.ID +'">'+ Queue.queue +'</option>\n';
-                    })
-
-                    document.getElementById("listQueue").innerHTML = result;
-                    //console.log(result);
-                    
-                }
-            })
-            //error concetion 
-            xhr.addEventListener('error', function() {
-                if( this.status === 404 ) {
-                    console.log('Page not found');
-                }else if( this.status === 500 ) {
-                    console.log('Server error');
-                }else {
-                    console.log('Error connection');
-                }
-            })
-
-            xhr.send();
-        }
-
-    </script>
-
-    <!-- <button type="button" >Try it</button> -->
+<BODY onLoad="showList('JS/Request/AjaxRequest.php?id=1', 'listQueue'); showList('JS/Request/AjaxRequest.php?id=2','listPriority')">
 
 
     <form method="POST" class="login">
 
-        <label type="ticketQueue">Koleja</label>
-        <select name="ticketQueue" id="listQueue" onClick="myData()" placeholder="Wybierz">
-            <option value="">Wybierz</option>
+        <label type="ticketQueue" onClick="showList('JS/Request/AjaxRequest.php?id=1', 'listQueue')">Koleja</label>
+        <select name="ticketQueue" id="listQueue" >
+            <!-- option from database --> 
         </select>
 
-        <label type="ticketPriority">Status</label>
-        <select name="ticketPriority">
-            <option value="">Wybierz</option>
-            <option value="1">Normalny</option>
-            <option value="2">Pilny</option>
-            <option value="3">Krytyczny</option>
+        <label type="ticketPriority" onClick="showList('JS/Request/AjaxRequest.php?id=2','listPriority')">Status</label>
+        <select name="ticketPriority" id="listPriority" >
+            <!-- option from database --> 
         </select>
 
         <label for="subject">Temat:</label>
