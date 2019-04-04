@@ -20,9 +20,11 @@
                 break;                    
             }
         } else {
+            //variable id in not numeric
             echo '<h2>Error 404</h2> <br/> <h4>Page not found!</h4>';
         }
     } else {
+        //variable id not exist
         echo '<h2>Error 404</h2> <br/> <h4>Page not found!</h4>';
     }
 
