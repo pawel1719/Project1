@@ -100,22 +100,22 @@ require_once PATH_TO_CLASSES_DB;
 				try {
 					
 					$user->create(array(
-						'username' => Input::get('username'),
-						'password' => Hash::make(Input::get('password'), $salt),
-						'salt' => Sanitize::escape($salt),
-						'password_date' => @date('Y-m-d H:i:s'),
-						'name' => Input::get('name'),
-						'surname' => Input::get('surname'),
-						'email' => Input::get('email'),
-						'number_phone' => Input::get('number_phone'),
-						'date_birdth' => Input::get('date_birdth'),
-						'city' => Input::get('city'),
-						'street' => Input::get('street'),
-						'no_house' => Input::get('no_house'),
-						'no_flat' => (strlen(Input::get('no_house')) > 0) ? Input::get('no_house') : NULL,
-						'joined' => @date('Y-m-d H:i:s'),
-						'group' => 1,
-						'consent_rodo' => Input::get('consent_rodo')
+						'username' 		=> Input::get('username'),
+						'password' 		=> Hash::make(Input::get('password'), $salt),
+						'salt' 			=> Sanitize::escape($salt),
+						'password_date' => date('Y-m-d H:i:s'),
+						'name' 			=> Input::get('name'),
+						'surname' 		=> Input::get('surname'),
+						'email' 		=> Input::get('email'),
+						'number_phone' 	=> Input::get('number_phone'),
+						'date_birdth' 	=> Input::get('date_birdth'),
+						'city' 			=> Input::get('city'),
+						'street' 		=> Input::get('street'),
+						'no_house' 		=> Input::get('no_house'),
+						'no_flat' 		=> (strlen(Input::get('no_house')) > 0) ? Input::get('no_house') : NULL,
+						'joined' 		=> date('Y-m-d H:i:s'),
+						'group' 		=> 1,
+						'consent_rodo' 	=> Input::get('consent_rodo')
 					));
 					
 					Input::destroy('username');

@@ -152,11 +152,7 @@ CREATE TABLE IF NOT EXISTS updatedFiles (
   path            VARCHAR(100) NULL,
   date_added      DATETIME,
   id_ticket       INT(11) NULL,
+  id_user         INT(11) NULL,
   user            VARCHAR(50) NULL,
   PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
-
-SELECT `ID`, `subject`, `description`, `id_ticketStatus`, `id_ticketQueue`, `id_ticketPriority`, `date_create_ticket` 
-FROM ticket 
-WHERE subject = 'Problem z komputerem'
-ORDER BY date_create_ticket ASC;

@@ -27,54 +27,43 @@ class File {
         return false;
     }//end function
 
-    public static function uploadFile($path, $file_name, $type = array('application/pdf', 'image/png', 'image/jpeg', 'text/csv')) {
-        $correct_type = false;
-
-        //check that type file is correct
-        for($i=0; $i<count($type); $i++) {
-            if($type[$i] === $_FILES[$file_name]['type']) {
-                $correct_type = true;
-            }
-        }
-
-        if($correct_type) {
-            $validate = new Validate();
-            $validate->check($_FILES[$file_name], array(
-                'name' => array(
-                    'min' => 5,
-                    'max' => 50
-                )
-            ));
+    public static function uploadFile($path, $file_name, $upload_all_flies = true) {    
+        $name =  $path . '/'.  $_FILES[$file_name]['name'];
         
-            if($validate->passed()) {
-                $name =  $path . '/'.  $_FILES[$file_name]['name'];
-                
-                //check that file was uploaded on server
-                if(is_uploaded_file($_FILES[$file_name]['tmp_name'])) {
-                    
-                    //check that file exist
-                    if(!file_exists($name)) {
-                        
-                        if(move_uploaded_file($_FILES[$file_name]['tmp_name'], $name)) {
-                            return true;    //added file
-                        } else {
-                            return false;   //error adding file
-                        }
+        //check that file was uploaded on server
+        if(is_uploaded_file($_FILES[$file_name]['tmp_name'])) {
+            $counter = 1;
+            $new = '';
+            $end = false;
+            $info = pathinfo($name);
+            $extension =  '.' . $info['extension'];
 
-                    } else {
-                        echo 'File was added!';
-                    }
+            do {
+                if(file_exists($name) && $upload_all_flies === true) {
+                    $name = str_replace($new, $extension, $name);
+                    $new = '('. $counter .')' . $extension;
+                    $name = str_replace($extension, $new, $name);
+                    $counter++;
                 } else {
-                    echo 'Error: not found file';
+                    $end = true;
                 }
+            }while(!$end);
+            //check that file exist
+
+            if(!file_exists($name)) {
+                
+                //uploading
+                if(move_uploaded_file($_FILES[$file_name]['tmp_name'], $name)) {
+                    return true;    //added file
+                } else {
+                    return false;   //error adding file
+                }
+                
             } else {
-                //errors validation
-                foreach($validate->errors() as $error) {
-                    echo $error . '<br/>';
-                }
+                echo 'File was added!';
             }
         } else {
-            echo 'Invalid type of file';
+            echo '#808325 Error: not found file';
         }
     }//end function
 

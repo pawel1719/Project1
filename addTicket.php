@@ -4,6 +4,7 @@
     require_once PATH_TO_CLASSES_FILE;
     require_once PATH_TO_CLASSES_INPUT;
     require_once PATH_TO_CLASSES_SANITIZE;
+    require_once PATH_TO_CLASSES_SESSION;
     require_once PATH_TO_CLASSES_TICKET;
     require_once PATH_TO_CLASSES_TOKEN;
     require_once PATH_TO_CLASSES_USER;
@@ -18,19 +19,26 @@
 
 </HEAD>
 <BODY onLoad="showList('JS/Request/AjaxRequest.php?id=1', 'listQueue'); showList('JS/Request/AjaxRequest.php?id=2','listPriority')">
-    
+<?php
+    require_once PATH_TO_MENU;
+?>
     <form method="POST" class="login" enctype="multipart/form-data">
 
 <?php
     $user = new User();
     //redirect for user is not login
-    // if(!$user->isLoggedIn()) {
-    //     header('Location: index.php');
-    // }
+    if(!$user->isLoggedIn()) {
+        header('Location: index.php');
+    }
+    //message to added ticket
+    if(Session::exist('ticket_message')) {
+        echo Session::flash('ticket_message');
+    }
 
     if(Input::exists()) {
         if(Token::check(Input::get('token'))) {
             
+            //validation form
             $validate = new Validate();
             $validation = $validate->check($_POST, array(
                 'ticketQueue' => array(
@@ -41,7 +49,8 @@
                 ),
                 'subject' => array(
                     'required' => true,
-                    'min' => 5
+                    'min' => 5,
+                    'max' => 100
                 ),
                 'description' => array(
                     'required' => true,
@@ -49,15 +58,36 @@
                 )
             ));
 
+            //validation file 
+            $validate_file = new Validate();
+            $validation_file = $validate_file->check($_FILES['attachment'], array(
+                'name' => array(
+                    'min' => 6,
+                    'max' => 50
+                ),
+                'size' => array(
+                    'max_value' => 10814415
+                ),
+                'type' => array(
+                    'allowed_type_file' => array(
+                        //allowed format mime type
+                        'application/pdf', 
+                        'image/png', 
+                        'image/jpeg', 
+                        'text/csv'
+                    )
+                )
+            ));
 
-            if($validation->passed()) {
+
+            if($validation->passed() && $validation_file->passed()) {
                 $subject = Input::get('subject');
                 $queue = Input::get('ticketQueue');
 
                 //adding ticket to database
                 $ticket = new Ticket();
                 $ticket->create(array(
-                    'id_declarant'          => 12, //user which added ticket
+                    'id_declarant'          => $user->data()->ID, //user which added ticket
                     'id_ticketStatus'       => 1, //value status for new ticket in system
                     'id_ticketPriority'     => Input::get('ticketPriority'),
                     'id_ticketQueue'        => $queue,
@@ -69,15 +99,14 @@
                 //ID from DB to the ticket being created
                 $db = DB::getInstance();
                 $id_ticket = $db->query("SELECT `ID`, `subject`, `description`, `date_create_ticket` 
-                    FROM ticket 
-                    WHERE subject = '{$subject}' AND id_ticketQueue = {$queue} AND id_ticketStatus = 1
-                    ORDER BY date_create_ticket DESC LIMIT 5");
+                            FROM ticket 
+                            WHERE subject = '{$subject}' AND id_ticketQueue = {$queue} AND id_ticketStatus = 1
+                            ORDER BY date_create_ticket DESC LIMIT 5");
                 $id = $id_ticket->results()[0]->ID;
 
                 //adding attachment 
-                $path_to_attachment = 'files/attachment/'. date('Y-m-d');
-                if(!empty($_FILES['attachment'])) {            
-                    
+                if(!empty($_FILES['attachment']) && strlen($_FILES['attachment']['name']) > 3) {      
+                    $path_to_attachment = 'files/attachment/'. date('Y-m-d');
                     if(File::createFolder($path_to_attachment)) {
                        
                         if(File::uploadFile($path_to_attachment, 'attachment')) {
@@ -90,7 +119,8 @@
                                 'path'          => $path_to_attachment .'/'. $_FILES['attachment']['name'],
                                 'date_added'    => date('Y-m-d H-i-s'),
                                 'id_ticket'     => $id,
-                                'user'          => NULL
+                                'id_user'       => $user->data()->ID,
+                                'user'          => ($user->data()->username .' '. $user->data()->name)
                             ));
                         }
                     }
@@ -101,11 +131,13 @@
                 Input::destroy('description');
                 Input::destroy('ticketQueue');
                 Input::destroy('ticketPriority');
+                Input::destroy('attachment');
 
                 //information about complete success
-                echo '<div class="login__message login__message--success">
-                        Added a ticket!
-                     </div>';
+                Session::flash('ticket_message', '<div class="login__message login__message--success">
+                                    Added a ticket!
+                                </div>');
+                header('Location: addTicket.php.php');
 
             } else {
                 //error from validaion
@@ -113,6 +145,9 @@
                 
                 foreach($validation->errors() as $error) {
                     echo $error . '<br/>';
+                }
+                foreach($validation_file->errors() as $error) {
+                    echo 'File ' . $error . '<br/>';
                 }
                 echo '</div>';
             }

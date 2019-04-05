@@ -28,11 +28,15 @@ class Input {
 	public static function destroy($name) {
 		if(isset($_POST[$name])) {
 			unset($_POST[$name]);
-			
+
 			return true;
 		} else if(isset($_GET[$name])) {
 			unset($_GET[$name]);
 			
+			return true;
+		} else if(isset($_FILES[$name])) {
+			unset($_FILES[$name]);
+
 			return true;
 		}
 		

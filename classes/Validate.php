@@ -73,6 +73,23 @@ class Validate {
 								$this->addError("{$item} contains illegal characters");
 							}
 						break;
+						case 'max_value' :
+							if($value > $rule_value) {
+								$this->addError("{$item} is too big");
+							}
+						break;
+						case 'allowed_type_file' :
+							$correct_type = false;
+
+							foreach($rule_value as $type) {
+								if($type === $value) {
+									$correct_type = true;
+								}
+							}
+							if($correct_type === false){
+								$this->addError('Invalid type of file');
+							}
+						break;
 						case 'strongPassword' :
 							//validations a strong password upercase and lowercase, number and special charset with out sapce
 							if(preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[\!\@\#\$\%\^\&\*\(\)\_\+\-\=])(?=.*[A-Z])(?!.*\s).{2,}$/", $value) !== 1) {
