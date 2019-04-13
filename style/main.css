@@ -7,7 +7,7 @@
 	If you need more, that's where to get'em. */
 
 body{    
-	display: flex;
+	/* display: flex; */
     justify-content: center;
     align-items: flex-start;
 

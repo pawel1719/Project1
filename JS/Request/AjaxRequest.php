@@ -15,6 +15,10 @@
                 case 2 :
                     echo $db->toJSON('ticketPriority');
                 break;
+                case '3' :
+                    Input::set('row', Input::get('row'));
+                    header('Location: ../../showTickets.php?row='. Input::get('row'));
+                break;
                 default:
                     echo '<h2>Error 404</h2> <br/> <h4>Page not found!</h4>';
                 break;                    

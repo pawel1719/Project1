@@ -24,6 +24,20 @@ class Input {
 		
 		return '';
 	}//end function get
+
+	public static function set($item, $value, $type = 'GET') {
+		switch($type) {
+			case 'GET':
+				return $_GET[$item] = $value;
+			break;		
+			case 'POST':
+				return $_POST[$item] = $value;
+			break;
+			default:
+				return '404';
+			break;
+		}
+	}//end function set
 	
 	public static function destroy($name) {
 		if(isset($_POST[$name])) {

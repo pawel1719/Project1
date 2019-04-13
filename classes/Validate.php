@@ -81,11 +81,13 @@ class Validate {
 						case 'allowed_type_file' :
 							$correct_type = false;
 
+							//comparing with data from array
 							foreach($rule_value as $type) {
 								if($type === $value) {
 									$correct_type = true;
 								}
 							}
+							//case when has been found the value on array
 							if($correct_type === false){
 								$this->addError('Invalid type of file');
 							}

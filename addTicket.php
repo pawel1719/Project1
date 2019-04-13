@@ -106,7 +106,7 @@
 
                 //adding attachment 
                 if(!empty($_FILES['attachment']) && strlen($_FILES['attachment']['name']) > 3) {      
-                    $path_to_attachment = 'files/attachment/'. date('Y-m-d');
+                    $path_to_attachment = 'files/attachment/tickets/'. $id;
                     if(File::createFolder($path_to_attachment)) {
                        
                         if(File::uploadFile($path_to_attachment, 'attachment')) {
@@ -137,7 +137,7 @@
                 Session::flash('ticket_message', '<div class="login__message login__message--success">
                                     Added a ticket!
                                 </div>');
-                header('Location: addTicket.php.php');
+                header('Location: addTicket.php');
 
             } else {
                 //error from validaion
@@ -152,7 +152,7 @@
                 echo '</div>';
             }
         }
-    }
+    }   
 
 ?>
         <label for="ticketQueue" class="login__label"` onClick="showList('http://localhost/quiz2/JS/Request/AjaxRequest.php?id=1', 'listQueue')">Koleja</label>
