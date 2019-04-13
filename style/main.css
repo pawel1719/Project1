@@ -17,6 +17,12 @@ body{
 	color: #FFF;
 }
 
+a {
+	color: rgb(170, 164, 164);
+}
+a:hover {
+	color: #FFF;
+}
 
 /* Login form */
 .login{    

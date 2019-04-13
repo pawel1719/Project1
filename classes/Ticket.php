@@ -54,6 +54,11 @@ class Ticket {
 	}
 
 	public function numberPages($link, $actual_page, $number_results = 10, $show_number = 5) {
+		//checking type of value, if isnt numeric set a default value of fucntion
+		$actual_page 	= (is_numeric($actual_page)) 	? $actual_page 		: 1;
+		$number_results = (is_numeric($number_results)) ? $number_results 	: 10;
+		$show_number 	= (is_numeric($show_number)) 	? $show_number 		: 5;
+		
 		//number of rows from db
 		$this->_data = $this->_db->query('SELECT COUNT(ID) row FROM ticket')->results();
 		$max = $this->_data[0]->row + $number_results;
