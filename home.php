@@ -4,7 +4,7 @@
 	require_once PATH_TO_CLASSES_USER;
 	require_once PATH_TO_CLASSES_SANITIZE;
 ?>
-<!doctype html>
+
 <HTML lang="pl-PL">
 <HEAD>
 

@@ -67,3 +67,23 @@
                 }
             });
     }
+
+    function showTable(row, page) {
+        if (row.length == 0) { 
+            document.getElementById("tableTickets").innerHTML = "Error";
+            return;
+        } else {
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("tableTickets").innerHTML = this.responseText;
+                    document.getElementById("ticket_row").value = row;
+                }
+            };
+
+            let link = "http://localhost/quiz/include/PHP/inc.tabTickets.php?id=3&page=" + page + "&row=" + row;
+            
+            xmlhttp.open("GET", link, true);
+            xmlhttp.send();
+        }
+    }

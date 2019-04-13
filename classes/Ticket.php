@@ -24,9 +24,9 @@ class Ticket {
 							,t.`subject` subject_ticket
 							,t.`description` desc_ticket
 							,t.`id_declarant` id_declarant_ticket
-							,CONCAT(u.name, " ", u.username) declarant
+							,CONCAT(u.name, " ", u.surname) declarant
 							,t.`id_operator_ticket` id_operator
-							,CONCAT(u2.name, " ", u2.username) operator
+							,CONCAT(u2.name, " ", u2.surname) operator
 							,t.`id_ticketStatus` id_status
 							,s.name_status status
 							,t.`id_ticketQueue` id_queue
@@ -61,7 +61,8 @@ class Ticket {
 		
 		//number of rows from db
 		$this->_data = $this->_db->query('SELECT COUNT(ID) row FROM ticket')->results();
-		$max = $this->_data[0]->row + $number_results;
+		$max = $this->_data[0]->row;
+		$max = ($max%$number_results !== 0) ? ($max+$number_results) : $max;
 		$numbers = '';
 
 		// numbers from range

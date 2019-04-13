@@ -52,7 +52,7 @@ class Validate {
 						break;
 						case 'date' :
 							//validaion date
-							if($value == @date('Y-m-d')) {
+							if($value == date('Y-m-d')) {
 								$this->addError("{$item} can't be a default value");
 							}
 						break;

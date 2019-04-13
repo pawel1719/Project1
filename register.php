@@ -11,7 +11,6 @@
 	require_once PATH_TO_CLASSES_SENDMAIL;
 ?>
 
-<!DOCTYPE html>
 <HTML lang="pl-PL">
 <HEAD>
 
