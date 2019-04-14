@@ -3,6 +3,13 @@
     require_once PATH_TO_UP_UP_CLASSES_ACTION;
     require_once PATH_TO_UP_UP_CLASSES_INPUT;
     require_once PATH_TO_UP_UP_CLASSES_TICKET;
+    require_once PATH_TO_UP_UP_CLASSES_USER;
+
+    $user = new User();
+    // redirect if user is not login
+    if(!$user->isLoggedIn()) {
+         header('Location: index.php');
+    }
     
     if(Input::exists('GET')) {
         //number of row on the page
@@ -56,13 +63,13 @@
             </tr>';
             
             $tickets = new Ticket();
-            $data_tickets = $tickets->showDataTickets((int)Input::get('page')-1, (int)Input::get('row'));
+            $data_tickets = $tickets->showDataTickets(1, array( 'no_row' => (int)Input::get('page')-1, 'result_on_page' => (int)Input::get('row')));
             
             for($i=0; $i<count($data_tickets); $i++) {
                 echo '<tr>
                     <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->id .'</a></td>
                     <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->subject_ticket .'</a></td>
-                    <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->desc_ticket .'</a></td>            
+                    <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'" title="'. $data_tickets[$i]->desc_ticket .'">'. Action::partText($data_tickets[$i]->desc_ticket, 100) .'</a></td>            
                     <td>'. $data_tickets[$i]->priority .'</td>
                     <td>'. $data_tickets[$i]->queue .'</td>
                     <td>'. $data_tickets[$i]->declarant .'</td>

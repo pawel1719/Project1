@@ -18,7 +18,22 @@ class Ticket {
 		}
 	}
 
-	public function showDataTickets($no_row = 0, $result_on_page = 10) {
+	public function showDataTickets($case, $variables = array( 'no_row' => 0, 'result_on_page' => 10)) {
+		switch($case) {
+			case 1 :
+				$syntax = 'WHERE t.ID <= ((SELECT MAX(ID) max_row FROM ticket) - '. ($variables['no_row']*$variables['result_on_page']) .')
+				 			ORDER BY ID DESC
+				 			LIMIT '. $variables['result_on_page'];
+			break;
+			case 2 : 
+				if(preg_match("/^[0-9]{1,}$/", $variables['user_id']) === 1) {
+					$syntax = 'WHERE t.ID = ' .$variables['user_id'];
+				}else{
+					throw new Exception('#80235_'. $variables['user_id'] .' There was a problem finding user');
+				}
+			break;
+			default: $syntax = '';
+		}
 		$this->_data = $this->_db->query('
 					SELECT 	 t.`ID` id
 							,t.`subject` subject_ticket
@@ -45,9 +60,7 @@ class Ticket {
 								  LEFT JOIN ticketStatus s ON t.id_ticketStatus=s.ID
 								  LEFT JOIN ticketQueue q ON t.id_ticketQueue=q.ID
 								  LEFT JOIN ticketPriority p ON t.id_ticketPriority=p.ID
-					WHERE t.ID <= ((SELECT MAX(ID) max_row FROM ticket) - '. ($no_row*$result_on_page) .')
-					ORDER BY ID DESC
-					LIMIT '. $result_on_page
+					'.$syntax
 			)->results();
 		
 		return $this->_data;
