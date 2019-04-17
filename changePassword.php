@@ -1,5 +1,5 @@
 <?php
-	require_once 'classes\config.php';
+	require_once 'classes/config.php';
 	require_once PATH_TO_CLASSES_INPUT;
 	require_once PATH_TO_CLASSES_SESSION;
 	require_once PATH_TO_CLASSES_VALIDATE;
@@ -83,11 +83,15 @@
 ?>
 
 <form method="POST">
-	Stare hasło: <input type="password" name="password_old"/> <br/>
-	Nowe hasło: <input type="password" name="password_new"/> <br/>
-	Potwierdź hasło: <input type="password" name="password_new_again"/> <br/>
+	Stare hasło: <input type="password" placeholder="Stare hasło" name="password_old"/> <br/>
+
+	Nowe hasło: <input type="password" placeholder="Nowe hasło" name="password_new"/> <br/>
+
+	Potwierdź hasło: <input type="password" placeholder="Potwierdź hasło" name="password_new_again"/> <br/
+	
 	<input type="hidden" name="token" value="<?php echo Token::generate(); ?>" />
 	<input type="submit" value="Zmień">
+	
 </form>
 
 </BODY>

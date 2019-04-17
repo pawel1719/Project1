@@ -86,6 +86,13 @@
                 <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit sint perspiciatis quaerat delectus, rem officia quasi neque iure eos. Ullam architecto facere similique quasi sunt nisi officia modi, sint accusantium. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis fugit, aperiam esse nisi dicta commodi quod perferendis consequuntur dolorum placeat eius unde, et fuga molestias labore? Perspiciatis dolore animi enim.</td>
                 <td>2019-04-12 15:35:29</td>
             </tr>
+            <tr>
+                <td><?php echo $user->data()->name .' '. $user->data()->surname; ?></td>
+                <form methof="POST">
+                    <td><textarea name="comment" cols="120" placeholder="Wpisz treść komentarza..." ></textarea></td>
+                    <td><input type="submit" value="Dodaj"></td>
+                </form>
+            </tr>
         </TABLE>
     </div>
 

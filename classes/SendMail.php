@@ -12,7 +12,7 @@ class SendMail {
 			$_db;
 	
 	public function __construct($exception = true) {
-		$this->_db = DB::getInstance();
+		$this->_db = DBB::getInstance();
 		$this->_mail = new PHPMailer($exception);
 	}//end consturctor
 	

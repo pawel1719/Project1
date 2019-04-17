@@ -1,5 +1,5 @@
 <?php
-	require_once 'classes\config.php';
+	require_once 'classes/config.php';
 	require_once PATH_TO_CLASSES_USER;
 	require_once PATH_TO_CLASSES_SESSION;
 

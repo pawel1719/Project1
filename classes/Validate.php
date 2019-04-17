@@ -9,7 +9,7 @@ class Validate {
 			$_db = null;
 			
 	public function __construct() {
-		$this->_db = DB::getInstance();
+		$this->_db = DBB::getInstance();
 	}//end constructor
 	
 	public function check($source, $items = array()) {

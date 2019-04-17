@@ -5,7 +5,7 @@
 
     if(Input::exists('GET')) {
         if(is_numeric(Input::get('id'))) {
-            $db = DB::getInstance();
+            $db = DBB::getInstance();
 
             //values for request ajax
             switch(Input::get('id')) {

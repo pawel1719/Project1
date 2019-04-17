@@ -156,3 +156,22 @@ CREATE TABLE IF NOT EXISTS updatedFiles (
   user            VARCHAR(50) NULL,
   PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- ---------------------------------------
+-- Table comments
+-- ---------------------------------------
+CREATE TABLE IF NOT EXISTS comments (
+  ID          INT(11) NOT NULL AUTO_INCREMENT,
+  id_user     INT(11) NOT NULL,
+  id_ticket   INT(11) NULL,
+  id_device   INT(11) NULL,
+  comment     TEXT NOT NULL,
+  date_add    DATETIME NOT NULL,
+  ip_address  VARCHAR(18),
+  port        VARCHAR(7) NULL,
+  user_agent  VARCHAR(255) NULL,
+  continent   VARCHAR(30) NULL,
+  country     VARCHAR(30) NULL,
+  city        VARCHAR(30) NULL,
+  PRIMARY KEY (ID),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;

@@ -1,5 +1,5 @@
 <?php 
-require_once 'Config.php';
+require_once 'config.php';
 require_once PATH_TO_DB;
 require_once PATH_TO_SESSION;
 
@@ -8,7 +8,7 @@ class Ticket {
 			$_data;
 
 	public function __construct($user = null) {
-		$this->_db = DB::getInstance();
+		$this->_db = DBB::getInstance();
 	}
 
 	public function create($fields = array()) {

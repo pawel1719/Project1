@@ -11,7 +11,7 @@ class User {
 			$_isLoggedIn;
 	
 	public function __construct($user = null) {
-		$this->_db = DB::getInstance();
+		$this->_db = DBB::getInstance();
 		$this->_sessionName = SESSION_NAME;
 
 		if(!$user) {

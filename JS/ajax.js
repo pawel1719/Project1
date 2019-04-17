@@ -81,9 +81,37 @@
                 }
             };
 
-            let link = "http://localhost/quiz/include/PHP/inc.tabTickets.php?id=3&page=" + page + "&row=" + row;
+            let link = "include/PHP/inc.tabTickets.php?id=3&page=" + page + "&row=" + row;
             
             xmlhttp.open("GET", link, true);
             xmlhttp.send();
         }
+    }
+
+    function showTableAPI(row, page) {
+        const ourHeaders = new Headers();
+
+        //dodajemy dodatkowe nagłówki
+        ourHeaders.append("Content-Type", "text/plain");
+        ourHeaders.append("X-My-Custom-Header", "CustomValue");
+
+        fetch("include/PHP/inc.tabTickets.php", {
+            method: "GET",
+            //headers: ourHeaders,
+            body: "id=3&row=" + row + "&page=" + page
+        })
+        //.then(res => res.json())
+        .then(res => {
+            console.log("Succes send data:");
+            console.log(res);
+        })
+        .catch(error => {
+            if (error.status === 404) {
+                console.log("Page not found");
+            }else if (error.status === 500) {
+                console.log("Server error");
+            }else {
+                console.log("Error connection " + error.status);
+            }
+        });
     }

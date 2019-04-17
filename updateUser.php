@@ -1,18 +1,11 @@
-<HTML>
-<HEAD>
-	<?php include_once PATH_TO_HEAD; ?>
-</HEAD>
-<BODY>
 <?php
-include_once PATH_TO_MENU;
-
-require_once 'classes\config.php';
-require_once PATH_TO_CLASSES_INPUT;
-require_once PATH_TO_CLASSES_SESSION;
-require_once PATH_TO_CLASSES_VALIADTE;
-require_once PATH_TO_CLASSES_USER;
-require_once PATH_TO_CLASSES_TOKEN;
-require_once PATH_TO_CLASSES_DB;
+	require_once 'classes/config.php';
+	require_once PATH_TO_CLASSES_INPUT;
+	require_once PATH_TO_CLASSES_SESSION;
+	require_once PATH_TO_CLASSES_VALIADTE;
+	require_once PATH_TO_CLASSES_USER;
+	require_once PATH_TO_CLASSES_TOKEN;
+	require_once PATH_TO_CLASSES_DB;
 
 	$user = new User();
 	//checking that user is logged
@@ -20,6 +13,17 @@ require_once PATH_TO_CLASSES_DB;
 		Session::flash('user_information', '<p>Musisz się <a href="index.php">zalogować</a> lub <a href="register.php">zarejestrować</a></p>');
 		header('Location: index.php');
 	}
+?>
+<HTML>
+<HEAD>
+
+	<?php include_once PATH_TO_HEAD; ?>
+
+</HEAD>
+<BODY>
+<?php
+
+	include_once PATH_TO_MENU;
 
 	if(Input::exists()) {
 		if(Token::check(Input::get('token'))) {
@@ -159,25 +163,34 @@ require_once PATH_TO_CLASSES_DB;
 	<form method="POST">
 		Login: <br/>
 		<input type="text" name="username" value="<?php echo Sanitize::escape($user->data()->username); ?>" /><br/>
+
 		Imię: <br/>
 		<input type="text" name="name" value="<?php echo Sanitize::escape($user->data()->name); ?>" /><br/>
+
 		Nazwisko: <br/>
 		<input type="text" name="surname" value="<?php echo Sanitize::escape($user->data()->surname); ?>" /><br/>
+
 		E-mail: <br/>
 		<input type="email" name="email" value="<?php echo Sanitize::escape($user->data()->email); ?>" /><br/>
+
 		Numer telefonu: <br/>
 		<input type="text" name="number_phone" value="<?php echo Sanitize::escape($user->data()->number_phone); ?>" /><br/>
+
 		Data urodzenia: <br/>
-		<input type="date" name="date_birdth" value="<?php echo @date('Y-m-d'); ?>" /><br/>
+		<input type="date" name="date_birdth" value="<?php echo date('Y-m-d'); ?>" /><br/>
+
 		Miasto: <br/>
 		<input type="text" name="city" value="<?php echo Sanitize::escape($user->data()->city); ?>" /><br/>
+
 		Ulica: <br/>
 		<input type="text" name="street" value="<?php echo Sanitize::escape($user->data()->street); ?>" /><br/>
+
 		Numer domu: <br/>
 		<input type="text" name="no_house" value="<?php echo Sanitize::escape($user->data()->no_house); ?>" /><br/>
+
 		Numer mieszkania: <br/>
 		<input type="text" name="no_flat" value="<?php echo Sanitize::escape($user->data()->no_flat); ?>" /><br/><br/>
-		
+
 		<input type="hidden" name="token" value="<?php echo Token::generate(); ?>" />
 		<input type="submit" value="Zapisz" />
 	</form>

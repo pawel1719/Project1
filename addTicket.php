@@ -96,7 +96,7 @@
                 ));
 
                 //ID from DB to the ticket being created
-                $db = DB::getInstance();
+                $db = DBB::getInstance();
                 $id_ticket = $db->query("SELECT `ID`, `subject`, `description`, `date_create_ticket` 
                             FROM ticket 
                             WHERE subject = '{$subject}' AND id_ticketQueue = {$queue} AND id_ticketStatus = 1
@@ -106,11 +106,11 @@
                 //adding attachment 
                 if(!empty($_FILES['attachment']) && strlen($_FILES['attachment']['name']) > 3) {      
                     $path_to_attachment = 'files/attachment/tickets/'. $id;
-                    if(File::createFolder($path_to_attachment)) {
+                    if(Filee::createFolder($path_to_attachment)) {
                        
-                        if(File::uploadFile($path_to_attachment, 'attachment')) {
+                        if(Filee::uploadFile($path_to_attachment, 'attachment')) {
                            
-                            File::infoToDB(array(
+                            Filee::infoToDB(array(
                                 'name'          => $_FILES['attachment']['name'],
                                 'size'          => $_FILES['attachment']['size'],
                                 'type'          => $_FILES['attachment']['type'],
@@ -154,12 +154,12 @@
     }   
 
 ?>
-        <label for="ticketQueue" class="login__label"` onClick="showList('http://localhost/quiz2/JS/Request/AjaxRequest.php?id=1', 'listQueue')">Koleja</label>
+        <label for="ticketQueue" class="login__label"` onClick="showList('JS/Request/AjaxRequest.php?id=1', 'listQueue')">Koleja</label>
         <select name="ticketQueue" id="listQueue" class="login__input" >
             <!-- option from database --> 
         </select>
 
-        <label for="ticketPriority" class="login__label"` onClick="showList('http://localhost/quiz2/JS/Request/AjaxRequest.php?id=2','listPriority')">Status</label>
+        <label for="ticketPriority" class="login__label"` onClick="showList('JS/Request/AjaxRequest.php?id=2','listPriority')">Status</label>
         <select name="ticketPriority" id="listPriority" class="login__input">
             <!-- option from database --> 
         </select>

@@ -1,5 +1,5 @@
 <?php
-	require_once 'classes\config.php';
+	require_once 'classes/config.php';
 	require_once PATH_TO_CLASSES_INPUT;
 	require_once PATH_TO_CLASSES_SESSION;
 	require_once PATH_TO_CLASSES_VALIDATE;
@@ -7,8 +7,7 @@
 	require_once PATH_TO_CLASSES_TOKEN;
 	require_once PATH_TO_CLASSES_DB;
 ?>
-
-<HTML lang="pl">
+<HTML lang="pl=PL">
 <HEAD>
 
 	<?php include_once PATH_TO_HEAD; ?>
@@ -83,7 +82,7 @@
 		
 		<div class="login__container">
 
-			<!-- redirection to register -->
+			<!-- link to register -->
 			<button class="login__button login__button--transparentBackground">
 				<a href="register.php" class="login__link login__link--decoration">Rejestracja</a>
 			</button>
