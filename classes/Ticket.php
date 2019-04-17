@@ -18,14 +18,39 @@ class Ticket {
 		}
 	}
 
+	public function addComment($fields = array()) {
+		//adding coment to ticket
+		if(!$this->_db->insert('comments', $fields)) {
+			throw new Exception('#80236 There was a  problem adding a comment');
+		}else{ 
+			return true; 
+		}
+	}// end
+
+	public function getCommentsForTicket($id) {
+		$query = 'SELECT c.ID
+						,c.id_user
+						,CONCAT(u.name, " ", u.surname) user_name
+						,c.id_ticket
+						,c.comment
+						,c.date_add 
+				FROM `comments` c LEFT JOIN users u ON c.id_user=u.ID
+				WHERE c.id_ticket = '. $id .'
+				ORDER BY c.date_add ASC';
+		
+		return $this->_db->query($query)->results();
+	}
+
 	public function showDataTickets($case, $variables = array( 'no_row' => 0, 'result_on_page' => 10)) {
 		switch($case) {
 			case 1 :
+				//return all tickets
 				$syntax = 'WHERE t.ID <= ((SELECT MAX(ID) max_row FROM ticket) - '. ($variables['no_row']*$variables['result_on_page']) .')
 				 			ORDER BY ID DESC
 				 			LIMIT '. $variables['result_on_page'];
 			break;
-			case 2 : 
+			case 2 :
+				//reutrn one tickets
 				if(preg_match("/^[0-9]{1,}$/", $variables['user_id']) === 1) {
 					$syntax = 'WHERE t.ID = ' .$variables['user_id'];
 				}else{
@@ -85,28 +110,21 @@ class Ticket {
 
 
 		if($bottom_value >= 1 && $top_value <= $no) {
-
 			//case when numbers are on the range
 			$max = ($actual_page+((int)($show_number/2)))*$number_results;
-
 		}else if($top_value > $no){
-
 			//case when numbers are behind a top range
 			$max = $no*$number_results;
-
 		}else {
-
 			//case when numbers are behind a bottom range
 			if($show_number<$no){
 				$max = $show_number*$number_results;
 			}else{
 				$max = $no*$number_results;
 			}
-
 		}
 
 		for($i=0; $i<$show_number; $i++) {
-			
 			$tmp = (int)($max/$number_results);
 			if($tmp < 1) { 
 				break; 

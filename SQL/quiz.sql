@@ -170,8 +170,5 @@ CREATE TABLE IF NOT EXISTS comments (
   ip_address  VARCHAR(18),
   port        VARCHAR(7) NULL,
   user_agent  VARCHAR(255) NULL,
-  continent   VARCHAR(30) NULL,
-  country     VARCHAR(30) NULL,
-  city        VARCHAR(30) NULL,
-  PRIMARY KEY (ID),
+  PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;

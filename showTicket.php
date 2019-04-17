@@ -4,6 +4,7 @@
     require_once PATH_TO_CLASSES_INPUT;
     require_once PATH_TO_CLASSES_SESSION;
     require_once PATH_TO_CLASSES_TICKET;
+    require_once PATH_TO_CLASSES_TOKEN;
     require_once PATH_TO_CLASSES_USER;
 
     $user = new User();
@@ -67,30 +68,31 @@
     <div id="comments">
         <TABLE border="1">
             <tr>    
-                <td>User</td>
-                <td>Content</td>
-                <td>Date</td>
+                <th>User</th>
+                <th>Content</th>
+                <th>Date</th>
             </tr>
-            <tr>    
-                <td>Adam Kowalski</td>
-                <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde nisi harum praesentium velit natus optio illo dolorum eligendi ut quia, delectus maiores tenetur atque dicta fugiat doloribus aspernatur rerum officia!</td>
-                <td>2019-04-12 14:55:21</td>
-            </tr>
-            <tr>    
-                <td>Mariusz Krogul</td>
-                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae similique illo veritatis libero aliquam animi ullam quos maxime blanditiis laborum, corporis facilis quam qui dolorem in. Rem pariatur odit vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint nesciunt soluta molestiae ad. Perspiciatis explicabo facilis consequatur nisi, non optio laborum et!</td>
-                <td>2019-04-12 15:12:11</td>
-            </tr>
-            <tr>    
-                <td>Adam Kowalski</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit sint perspiciatis quaerat delectus, rem officia quasi neque iure eos. Ullam architecto facere similique quasi sunt nisi officia modi, sint accusantium. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis fugit, aperiam esse nisi dicta commodi quod perferendis consequuntur dolorum placeat eius unde, et fuga molestias labore? Perspiciatis dolore animi enim.</td>
-                <td>2019-04-12 15:35:29</td>
-            </tr>
+            <?php
+                $comment = $ticket_ob->getCommentsForTicket($ticket->id);
+                
+                foreach($comment as $tab) {
+                    echo '<tr>
+                            <td>'. $tab->user_name .'</td>
+                            <td>'. $tab->comment .'</td>
+                            <td>'. $tab->date_add .'</td>
+                         </tr>';
+                }
+            ?>
             <tr>
                 <td><?php echo $user->data()->name .' '. $user->data()->surname; ?></td>
-                <form methof="POST">
-                    <td><textarea name="comment" cols="120" placeholder="Wpisz treść komentarza..." ></textarea></td>
-                    <td><input type="submit" value="Dodaj"></td>
+                <form method="POST">
+                    <td><textarea name="comment" id="comment" cols="120" placeholder="Wpisz treść komentarza..." ></textarea></td>
+                    <td>
+                        <input type="hidden" name="user" id="user" value="<?php echo $user->data()->ID ?>" >
+                        <input type="hidden" name="token" id="token" value="<?php echo Token::generate(); ?>" >
+                        <input type="hidden" name="ticket" id="ticket" value="<?php echo $ticket->id; ?>" >
+                        <input type="button" onClick="addComment()" value="Dodaj">
+                    </td>
                 </form>
             </tr>
         </TABLE>

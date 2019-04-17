@@ -100,10 +100,63 @@
             //headers: ourHeaders,
             body: "id=3&row=" + row + "&page=" + page
         })
-        //.then(res => res.json())
+        .then(res => res.text())
         .then(res => {
             console.log("Succes send data:");
             console.log(res);
+        })
+        .catch(error => {
+            if (error.status === 404) {
+                console.log("Page not found");
+            }else if (error.status === 500) {
+                console.log("Server error");
+            }else {
+                console.log("Error connection " + error.status);
+            }
+        });
+    }
+
+    function addComment() {
+        let comment = document.querySelector('#comment').value;
+        let user = document.querySelector('#user').value;
+        let ticket = document.querySelector('#ticket').value
+        let token = document.querySelector('#token').value;
+
+        if(comment.length > 5 && user.length != 0 && ticket.length != 0) {
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = function() {
+                if(this.status === 200 && this.readyState == 4){
+                    console.log(this.responseText);
+                    alert(this.responseText);
+                }
+            }
+
+            let data = 'comment=' + comment + '&user=' + user + '&token=' + token + '&ticket=' + ticket;
+
+            xhr.open('POST', 'JS/Request/AjaxRequest.php?id=4', true);
+            xhr.setRequestHeader('Content-type', "application/x-www-form-urlencoded");
+            xhr.send(data);
+        }else{
+            console.log('Error variables');
+            alert('Za krótki komentarz!');
+        }
+    }//end
+
+    function addCommentAPI(content) {
+        const data = new FormData();
+        data.append('comment', document.querySelector('#' + content).value);
+
+        fetch("AjaxRequest.php?id=4", {
+            method: 'POST',
+            headers: {
+                "Content-type": "text/html; charset=utf-8"
+            },
+            body: "comment=" + document.querySelector('#' + content).value
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log('Send succes')
         })
         .catch(error => {
             if (error.status === 404) {

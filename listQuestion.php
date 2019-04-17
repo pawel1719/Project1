@@ -25,7 +25,7 @@
 
 	include_once PATH_TO_MENU;
 
-	$db = DB::getInstance()->query('SELECT * FROM `question` GROUP BY Question ASC');
+	$db = DBB::getInstance()->query('SELECT * FROM `question` GROUP BY Question ASC');
 	
 	if(!$db->error()) {
 		$results = $db->results();
