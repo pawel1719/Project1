@@ -41,6 +41,10 @@ class Ticket {
 		return $this->_db->query($query)->results();
 	}
 
+	public function showData($query) {
+		return $this->_db->query($query)->results();
+	}//end
+
 	public function showDataTickets($case, $variables = array( 'no_row' => 0, 'result_on_page' => 10)) {
 		switch($case) {
 			case 1 :

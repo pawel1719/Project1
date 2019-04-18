@@ -129,6 +129,7 @@
                 if(this.status === 200 && this.readyState == 4){
                     console.log(this.responseText);
                     alert(this.responseText);
+                    comment = document.querySelector('#comment').value = '';
                 }
             }
 
@@ -143,28 +144,76 @@
         }
     }//end
 
-    function addCommentAPI(content) {
-        const data = new FormData();
-        data.append('comment', document.querySelector('#' + content).value);
+    function addCommentAPI() {
+        //data from a form
+        let comment = document.querySelector("#comment").value;
+        let user = document.querySelector("#user").value;
+        let ticket = parseInt(document.querySelector("#ticket").value);
+        let token = document.querySelector("#token").value;
+        
+        if(comment.length > 5 && user.length != 0 && ticket.length != 0) {
+            //headers to send
+            const ourHeaders = new Headers();
+            ourHeaders.append("Content-Type", "text/html");
 
-        fetch("AjaxRequest.php?id=4", {
-            method: 'POST',
-            headers: {
-                "Content-type": "text/html; charset=utf-8"
-            },
-            body: "comment=" + document.querySelector('#' + content).value
-        })
-        .then(res => res.json())
-        .then(res => {
-            console.log('Send succes')
-        })
-        .catch(error => {
-            if (error.status === 404) {
-                console.log("Page not found");
-            }else if (error.status === 500) {
-                console.log("Server error");
-            }else {
-                console.log("Error connection " + error.status);
-            }
-        });
+            //data to send
+            const data = new FormData();
+            data.append('comment', comment);
+            data.append('user', user);
+            data.append('ticket', ticket);
+            data.append('token', token);
+            
+            fetch("JS/Request/AjaxRequest.php?id=4", {
+                    method: 'POST',
+                    body: data
+                })
+                .then(resp => resp.text())
+                .then(resp => {
+                    //results for the success conection 
+                    console.log(resp);
+                    document.querySelector("#comment").value = "";
+                    this.showCommentsAPI(ticket);
+                    alert(resp);
+                })
+                .catch(error => {
+                    //results for the errors conection
+                    if (error.status === 404) {
+                        console.log("Page not found");
+                    }else if (error.status === 500) {
+                        console.log("Server error");
+                    }else {
+                        console.log("Error connection " + error.status);
+                    }
+                });
+        }else{
+            //message when comment is shorter than 5 charset
+            console.log('Error variables');
+            alert('Za krótki komentarz!');
+        }
+    }//end function
+
+    function showCommentsAPI(id) {
+        if(typeof id === 'number') {
+            const link = "include/PHP/inc.tabComments.php?id=" + id;
+
+            fetch(link)
+            .then(resp => resp.text())
+            .then(resp => {
+                document.getElementById("comments").innerHTML = resp;
+                console.log('Added coment');
+            })
+            .catch(error => {
+                //results for the errors conection
+                if (error.status === 404) {
+                    console.log("Page not found");
+                }else if (error.status === 500) {
+                    console.log("Server error");
+                }else {
+                    console.log("Error connection " + error.status);
+                }
+            });
+        }else{
+            console.log('Podana wartość ' + id + ' nie jest liczbą');
+            console.log(typeof id);
+        }
     }

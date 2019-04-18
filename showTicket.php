@@ -12,7 +12,14 @@
     if(!$user->isLoggedIn()) {
          header('Location: index.php');
     }
+
+    if(!is_numeric(Input::get('id'))) {
+        header('Location: showTickets.php?row=10&page=1');
+    }
         
+    $ticket_ob = new Ticket();
+    $ticket = $ticket_ob->showDataTickets(2, array('user_id' => Input::get('id')))[0];
+
 ?>
 <HTML lang="pl=PL">
 <HEAD>
@@ -21,15 +28,23 @@
     <script src="JS/ajax.js"></script> 
 
 </HEAD>
-<BODY>
+<BODY onLoad="showCommentsAPI(<?php echo (int)$ticket->id; ?>)">
 
     <?php   require_once PATH_TO_MENU;  ?>
 
     <!-- TABLE WITH TICKETS -->
     <div id="detailsTicket">
     <?php
-        $ticket_ob = new Ticket();
-        $ticket = $ticket_ob->showDataTickets(2, array('user_id' => Input::get('id')))[0];
+
+        $query = 'SELECT  ID
+                    ,name
+                    ,path
+                    ,date_added
+                    ,id_ticket
+                FROM updatedFiles
+                WHERE id_ticket = '. $ticket->id;
+        $file_from_db = $ticket_ob->showData($query);
+
         echo '<table border="1">
                 <tr>   
                     <td>Numer zgłoszenia</td> 
@@ -51,6 +66,9 @@
                     <td>Data planowanego zakończenia</td><td>'. $ticket->date_planned_end .'</td>
                     <td>Powiązane zgłoszenie</td><td>#'. $ticket->id_linked .'</td>
                 </tr>
+                    <td>Nazwa załącznika</td><td>'. $file_from_db[0]->name .'</td>
+                    <td>Załącznik</td><td><a href="'. $file_from_db[0]->path .'">'. $file_from_db[0]->name .'</a></td>
+                </tr>
                 <tr>
                     <td>Temat: </td>
                     <td colspan="3">'. $ticket->subject_ticket .'</td>
@@ -62,40 +80,12 @@
             </table>';
     ?>
     </div>
-
+    <?php
+    
+    ?>
     <br /><br />
 
     <div id="comments">
-        <TABLE border="1">
-            <tr>    
-                <th>User</th>
-                <th>Content</th>
-                <th>Date</th>
-            </tr>
-            <?php
-                $comment = $ticket_ob->getCommentsForTicket($ticket->id);
-                
-                foreach($comment as $tab) {
-                    echo '<tr>
-                            <td>'. $tab->user_name .'</td>
-                            <td>'. $tab->comment .'</td>
-                            <td>'. $tab->date_add .'</td>
-                         </tr>';
-                }
-            ?>
-            <tr>
-                <td><?php echo $user->data()->name .' '. $user->data()->surname; ?></td>
-                <form method="POST">
-                    <td><textarea name="comment" id="comment" cols="120" placeholder="Wpisz treść komentarza..." ></textarea></td>
-                    <td>
-                        <input type="hidden" name="user" id="user" value="<?php echo $user->data()->ID ?>" >
-                        <input type="hidden" name="token" id="token" value="<?php echo Token::generate(); ?>" >
-                        <input type="hidden" name="ticket" id="ticket" value="<?php echo $ticket->id; ?>" >
-                        <input type="button" onClick="addComment()" value="Dodaj">
-                    </td>
-                </form>
-            </tr>
-        </TABLE>
     </div>
 
 
