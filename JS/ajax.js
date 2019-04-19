@@ -146,10 +146,11 @@
 
     function addCommentAPI() {
         //data from a form
-        let comment = document.querySelector("#comment").value;
-        let user = document.querySelector("#user").value;
-        let ticket = parseInt(document.querySelector("#ticket").value);
-        let token = document.querySelector("#token").value;
+        let comment     = document.querySelector("#comment").value;
+        let user        = document.querySelector("#user").value;
+        let ticket      = parseInt(document.querySelector("#ticket").value);
+        let token       = document.querySelector("#token").value;
+        let visibility  = document.querySelector("#visibility").value;
         
         if(comment.length > 5 && user.length != 0 && ticket.length != 0) {
             //headers to send
@@ -162,6 +163,7 @@
             data.append('user', user);
             data.append('ticket', ticket);
             data.append('token', token);
+            data.append('visibility', visibility);
             
             fetch("JS/Request/AjaxRequest.php?id=4", {
                     method: 'POST',
@@ -200,7 +202,7 @@
             .then(resp => resp.text())
             .then(resp => {
                 document.getElementById("comments").innerHTML = resp;
-                console.log('Added coment');
+                console.log('Comments refresh');
             })
             .catch(error => {
                 //results for the errors conection

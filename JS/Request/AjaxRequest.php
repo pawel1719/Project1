@@ -27,6 +27,7 @@
                             //names columns on table in database
                             'id_user'   => Input::get('user'),
                             'id_ticket' => Input::get('ticket'),
+                            'visibility'=> Input::get('visibility'),
                             'comment'   => Input::get('comment'),
                             'date_add'  => date('Y-m-d H:i:s') ,
                             'ip_address'=> $_SERVER['REMOTE_ADDR'],

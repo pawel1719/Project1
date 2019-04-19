@@ -45,6 +45,9 @@
                 WHERE id_ticket = '. $ticket->id;
         $file_from_db = $ticket_ob->showData($query);
 
+        $file_name = isset($file_from_db[0]->name) ? $file_from_db[0]->name : '';
+        $file_path = isset($file_from_db[0]->path) ? $file_from_db[0]->path : '';
+
         echo '<table border="1">
                 <tr>   
                     <td>Numer zgłoszenia</td> 
@@ -66,8 +69,8 @@
                     <td>Data planowanego zakończenia</td><td>'. $ticket->date_planned_end .'</td>
                     <td>Powiązane zgłoszenie</td><td>#'. $ticket->id_linked .'</td>
                 </tr>
-                    <td>Nazwa załącznika</td><td>'. $file_from_db[0]->name .'</td>
-                    <td>Załącznik</td><td><a href="'. $file_from_db[0]->path .'">'. $file_from_db[0]->name .'</a></td>
+                    <td>Nazwa załącznika</td><td>'. $file_name .'</td>
+                    <td>Załącznik</td><td><a href="'. $file_path .'">'. $file_name .'</a></td>
                 </tr>
                 <tr>
                     <td>Temat: </td>

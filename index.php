@@ -1,6 +1,7 @@
 <?php
 	require_once 'classes/config.php';
 	require_once PATH_TO_CLASSES_INPUT;
+	require_once PATH_TO_CLASSES_LOGS;
 	require_once PATH_TO_CLASSES_SESSION;
 	require_once PATH_TO_CLASSES_VALIDATE;
 	require_once PATH_TO_CLASSES_USER;
@@ -41,13 +42,18 @@
 				if($login) {
 					//counter success login
 					if($user->counterLogin('counter_success_logged', 'last_success_logged',Input::get('username'))) {
+						
 						//login is successful 
+						Logs::log(Input::get('username'), 'Succesfull logged!', 'Success');
+
 						Session::flash('welcome', 'Logowanie zakończono pomyślnie');
 						header('Location: home.php');
 					}
 				} else {
 					//counter faild login
 					$user->counterLogin('counter_failed_logged', 'last_failed_logged',Input::get('username'));
+					Logs::log(Input::get('username'), 'Incorrect login or password', 'Error');
+
 					//error login
 					Session::flash('faild_login', 'Niepoprawny login lub hasło!');
 					if(Session::exist('faild_login')) {
@@ -62,6 +68,9 @@
 					echo $error . '<br />';
 				}//end loop			
 				echo '</div>';
+
+				//logs error
+				Logs::log(Input::get('username'), 'Unpassed validation for login', 'Error');
 			}
 		}
 	}

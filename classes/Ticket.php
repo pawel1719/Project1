@@ -32,6 +32,7 @@ class Ticket {
 						,c.id_user
 						,CONCAT(u.name, " ", u.surname) user_name
 						,c.id_ticket
+						,c.visibility
 						,c.comment
 						,c.date_add 
 				FROM `comments` c LEFT JOIN users u ON c.id_user=u.ID

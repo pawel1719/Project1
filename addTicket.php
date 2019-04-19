@@ -18,9 +18,10 @@
 
 </HEAD>
 <BODY onLoad="showList('JS/Request/AjaxRequest.php?id=1', 'listQueue'); showList('JS/Request/AjaxRequest.php?id=2','listPriority')">
-<?php
-    require_once PATH_TO_MENU;
-?>
+
+<?php require_once PATH_TO_MENU; ?>
+
+
     <form method="POST" class="login" enctype="multipart/form-data">
 
 <?php
