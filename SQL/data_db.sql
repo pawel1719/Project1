@@ -8,6 +8,15 @@
 -- --------------------------------------------
 -- Query adding data to table ticketPriority
 -- --------------------------------------------
+INSERT INTO groups (ID, name )
+VALUES
+(1, 'Administrators'),
+(2, 'IT'),
+(3, 'User');
+
+-- --------------------------------------------
+-- Query adding data to table ticketPriority
+-- --------------------------------------------
 INSERT INTO ticketPriority (ID, name_priority)
 VALUES
 (1, 'Normalny'),

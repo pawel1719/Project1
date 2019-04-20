@@ -2,6 +2,7 @@
 	require_once 'classes/config.php';
 	require_once PATH_TO_CLASSES_VALIDATE;
 	require_once PATH_TO_CLASSES_INPUT;
+	require_once PATH_TO_CLASSES_LOGS;
 	require_once PATH_TO_CLASSES_DB;
 	require_once PATH_TO_CLASSES_TOKEN;
 	require_once PATH_TO_CLASSES_SANITIZE;
@@ -24,6 +25,7 @@
 	$user = new User();
 	//redirect if is logged
 	if($user->isLoggedIn()) {
+		Logs::log('unknow', 'Unauthorized access to app', 'Alert security');
 		header('Location: home.php');
 	}
 	
@@ -126,6 +128,9 @@
 						'consent_rodo' => Input::get('consent_rodo')
 					));
 
+					$log = 'Username: '. Input::get('username') .' Name: '. Input::get('surname') .' '. Input::get('name') .' E-mail: '. Input::get('email');
+					Logs::log(Input::get('username'), 'Successful register '. $log, 'Error');
+
 					//message to the user who successfully finish register
 					$HTML = '
 					<HTML><HEAD></HEAD>
@@ -167,6 +172,8 @@
 				}
 
 			} else {
+				Logs::log(Input::get('username'), 'Unpassed validation for register', 'Error');
+
 				//error from validation
 				echo '<div class="login__message login__message--alert">';
 				

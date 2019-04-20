@@ -26,33 +26,35 @@
         $show_com = false;
         $visibility = '';
 
-        switch($tab->visibility ) {
-            case 1 : 
-                //comment for all user
-                $show_com = true;
-                $visibility = '<small>(Ogólny)</small>';
-            break;
-            case 2 :
-                //comment for group
-                $show_com = true;
-                $visibility = '<small>(Działowy)</small>';
-            break;
-            case 3 : 
-                //comment only for owner
-                if($tab->id_user === $user->data()->ID) {
+        if(!empty($tab) && isset($tab->visibility)) {
+            switch($tab->visibility ) {
+                case 1 : 
+                    //comment for all user
                     $show_com = true;
-                    $visibility = '<small>(Prywatny)</small>';
-                }
-            break;            
-        }
+                    $visibility = '<small>(Ogólny)</small>';
+                break;
+                case 2 :
+                    //comment for group
+                    $show_com = true;
+                    $visibility = '<small>(Działowy)</small>';
+                break;
+                case 3 : 
+                    //comment only for owner
+                    if($tab->id_user === $user->data()->ID) {
+                        $show_com = true;
+                        $visibility = '<small>(Prywatny)</small>';
+                    }
+                break;            
+            }
 
-        //add comment to show
-        if($show_com) {
-            echo '<tr>
-                    <td>'. $tab->user_name .'<br/>'. $visibility .'</td>
-                    <td>'. $tab->comment .'</td>
-                    <td>'. $tab->date_add .'</td>
-                </tr>';
+            //add comment to show
+            if($show_com) {
+                echo '<tr>
+                        <td>'. $tab->user_name .'<br/>'. $visibility .'</td>
+                        <td>'. $tab->comment .'</td>
+                        <td>'. $tab->date_add .'</td>
+                    </tr>';
+            }
         }
     }//end foreach
     

@@ -2,8 +2,17 @@
     require_once '../../classes/config.php';
     require_once PATH_TO_UP_UP_CLASSES_DB;
     require_once PATH_TO_UP_UP_CLASSES_INPUT;
+    require_once PATH_TO_UP_UP_CLASSES_LOGS;
     require_once PATH_TO_UP_UP_CLASSES_TICKET;
+    require_once PATH_TO_UP_UP_CLASSES_USER;
 
+    $user = new User();
+    // redirect if user is not login
+    if(!$user->isLoggedIn()) {
+        Logs::log('unknow', 'Unauthorized access to app', 'Alert security');
+        header('Location: index.php');
+    }
+    
     if(Input::exists('GET')) {
         if(is_numeric(Input::get('id'))) {
             $db = DBB::getInstance();
@@ -37,8 +46,10 @@
                         //date to DB
                         if($ticket->addComment($fields)) { 
                             echo 'Added comment!';
+                            Logs::log( 'ID ' .Input::get('user'), 'Added comment: '.Input::get('comment') .' for ticket #'. Input::get('ticket'), 'Success');
                         }else{
                             echo 'Error adding comment';
+                            Logs::log('ID '. Input::get('user'), 'Error added comment: '.Input::get('comment') .' for ticket #'. Input::get('ticket'), 'Error');
                         }
                     }
                 break;
@@ -49,10 +60,12 @@
         } else {
             //variable id in not numeric
             echo '<h2>Error 404</h2> <br/> <h4>Page not found!</h4>';
+            Logs::log(NULL, 'Unauthorized access', 'Error' );
         }
     } else {
         //variable id not exist
         echo '<h2>Error 404</h2> <br/> <h4>Page not found!</h4>';
+        Logs::log(NULL, 'Unauthorized access', 'Error' );
     }
 
 ?>

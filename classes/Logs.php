@@ -1,6 +1,6 @@
 <?php
     require_once 'config.php';
-    require_once PATH_TO_CLASSES_DB;
+    require_once PATH_TO_DB;
     
 class Logs {
     private $_db;

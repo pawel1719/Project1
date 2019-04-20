@@ -2,13 +2,15 @@
     require_once '../../classes/config.php';
     require_once PATH_TO_UP_UP_CLASSES_ACTION;
     require_once PATH_TO_UP_UP_CLASSES_INPUT;
+    require_once PATH_TO_UP_UP_CLASSES_LOGS;
     require_once PATH_TO_UP_UP_CLASSES_TICKET;
     require_once PATH_TO_UP_UP_CLASSES_USER;
 
     $user = new User();
     // redirect if user is not login
     if(!$user->isLoggedIn()) {
-         header('Location: index.php');
+        Logs::log('unknow', 'Unauthorized access to app', 'Alert security');
+        header('Location: index.php');
     }
     
     if(Input::exists('GET')) {
@@ -99,6 +101,7 @@
             </select>';
 
         }else{
+            Logs::log($user->data()->username, 'Unauthorized access to page', 'Alert security');
             header("HTTP/1.0 404 Not Found");
             echo "<h2>Error 404 </h2> <br/> Page not found";
             die();

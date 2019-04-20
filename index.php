@@ -23,6 +23,7 @@
 	$user = new User();
 	//case when user is logged
 	if($user->isLoggedIn()) {
+		Logs::log($user->data()->username, 'Redirect for logged user', 'Information');
 		header('Location: home.php');
 	}
 

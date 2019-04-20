@@ -1,8 +1,9 @@
 <?php
 	require_once 'classes/config.php';
 	require_once PATH_TO_CLASSES_INPUT;
+	require_once PATH_TO_CLASSES_LOGS;
 	require_once PATH_TO_CLASSES_SESSION;
-	require_once PATH_TO_CLASSES_VALIADTE;
+	require_once PATH_TO_CLASSES_VALIDATE;
 	require_once PATH_TO_CLASSES_USER;
 	require_once PATH_TO_CLASSES_TOKEN;
 	require_once PATH_TO_CLASSES_DB;
@@ -11,6 +12,7 @@
 	//checking that user is logged
 	if(!$user->isLoggedIn()) {
 		Session::flash('user_information', '<p>Musisz się <a href="index.php">zalogować</a> lub <a href="register.php">zarejestrować</a></p>');
+		Logs::log('unknow', 'Unauthorized access to app', 'Alert security');
 		header('Location: index.php');
 	}
 ?>
@@ -30,22 +32,6 @@
 			
 			$validate = new Validate();
 			$validation = $validate->check($_POST, array(
-				'username' => array(
-					'required' => true,
-					'min' => 3,
-					'max' => 40,
-					'unique' => 'users'
-				),
-				'password' => array(
-					'required' => true,
-					'min' => 4,
-					'max' => 30,
-					'strongPassword' => true
-				),
-				'password_again' => array(
-					'required' => true,
-					'matches' => 'password'
-				),
 				'name' => array(
 					'required' => true,
 					'min' => 2,
@@ -104,10 +90,6 @@
 				try {
 					
 					$user->create(array(
-						'username' 		=> Input::get('username'),
-						'password' 		=> Hash::make(Input::get('password'), $salt),
-						'salt' 			=> Sanitize::escape($salt),
-						'password_date' => date('Y-m-d H:i:s'),
 						'name' 			=> Input::get('name'),
 						'surname' 		=> Input::get('surname'),
 						'email' 		=> Input::get('email'),
@@ -121,6 +103,8 @@
 						'group' 		=> 1,
 						'consent_rodo' 	=> Input::get('consent_rodo')
 					));
+
+					Logs::log($user->data()->username, 'User data changed', 'Information');
 					
 					Input::destroy('username');
 					Input::destroy('password');
@@ -143,6 +127,8 @@
 					die($e->getMessage());
 				}
 			} else {
+				Logs::log($user->data()->username, 'Unpassed validation for update data user', 'Error');
+
 				//show the error for validation 
 				foreach($validation->errors() as $error) {
 					echo $error . '<br />';
@@ -161,9 +147,6 @@
 ?>
 
 	<form method="POST">
-		Login: <br/>
-		<input type="text" name="username" value="<?php echo Sanitize::escape($user->data()->username); ?>" /><br/>
-
 		Imię: <br/>
 		<input type="text" name="name" value="<?php echo Sanitize::escape($user->data()->name); ?>" /><br/>
 

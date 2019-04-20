@@ -3,6 +3,7 @@
     require_once PATH_TO_CLASSES_DB;
     require_once PATH_TO_CLASSES_FILE;
     require_once PATH_TO_CLASSES_INPUT;
+    require_once PATH_TO_CLASSES_LOGS;
     require_once PATH_TO_CLASSES_SANITIZE;
     require_once PATH_TO_CLASSES_SESSION;
     require_once PATH_TO_CLASSES_TICKET;
@@ -95,7 +96,7 @@
                     'description'           => Input::get('description'),
                     'date_create_ticket'    => date('Y-m-d H:i:s')
                 ));
-
+                
                 //ID from DB to the ticket being created
                 $db = DBB::getInstance();
                 $id_ticket = $db->query("SELECT `ID`, `subject`, `description`, `date_create_ticket` 
@@ -103,7 +104,9 @@
                             WHERE subject = '{$subject}' AND id_ticketQueue = {$queue} AND id_ticketStatus = 1
                             ORDER BY date_create_ticket DESC LIMIT 5");
                 $id = $id_ticket->results()[0]->ID;
-
+                
+                Logs::log($user->data()->username, 'Succes added ticket #'. $id, 'Success');
+                
                 //adding attachment 
                 if(!empty($_FILES['attachment']) && strlen($_FILES['attachment']['name']) > 3) {      
                     $path_to_attachment = 'files/attachment/tickets/'. $id;
@@ -122,6 +125,8 @@
                                 'id_user'       => $user->data()->ID,
                                 'user'          => ($user->data()->username .' '. $user->data()->name)
                             ));
+
+                            Logs::log($user->data()->username, 'Succes added file to ticket #'. $id, 'Success');
                         }
                     }
                 }
@@ -150,6 +155,7 @@
                     echo 'File ' . $error . '<br/>';
                 }
                 echo '</div>';
+                Logs::log($user->data()->username, 'Error fvalidation for added ticket or file', 'Error');
             }
         }
     }   

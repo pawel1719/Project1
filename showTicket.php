@@ -2,6 +2,7 @@
     require_once 'classes/config.php';
     require_once PATH_TO_CLASSES_DB;
     require_once PATH_TO_CLASSES_INPUT;
+    require_once PATH_TO_CLASSES_LOGS;
     require_once PATH_TO_CLASSES_SESSION;
     require_once PATH_TO_CLASSES_TICKET;
     require_once PATH_TO_CLASSES_TOKEN;
@@ -10,7 +11,8 @@
     $user = new User();
     // redirect if user is not login
     if(!$user->isLoggedIn()) {
-         header('Location: index.php');
+        Logs::log('unknow', 'Unauthorized access to app', 'Alert security');
+        header('Location: index.php');
     }
 
     if(!is_numeric(Input::get('id'))) {
