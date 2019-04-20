@@ -10,6 +10,17 @@
 	require_once PATH_TO_CLASSES_USER;
 	require_once PATH_TO_CLASSES_SESSION;
 	require_once PATH_TO_CLASSES_SENDMAIL;
+
+	//save information about visit to file
+	Logs::logsToFile('Visited on page');
+	
+	$user = new User();
+	//redirect if is logged
+	if($user->isLoggedIn()) {
+		Logs::log('unknow', 'Unauthorized access to app', 'Alert security');
+		header('Location: home.php');
+	}
+
 ?>
 
 <HTML lang="pl-PL">
@@ -22,13 +33,6 @@
 
 <?php
 
-	$user = new User();
-	//redirect if is logged
-	if($user->isLoggedIn()) {
-		Logs::log('unknow', 'Unauthorized access to app', 'Alert security');
-		header('Location: home.php');
-	}
-	
 	if(Input::exists()) {
 		if(Token::check(Input::get('token'))) {
 
@@ -110,22 +114,22 @@
 				try {
 					//adding user information to database
 					$user->create(array(
-						'username' => Input::get('username'),
-						'password' => Hash::make(Input::get('password'), $salt),
-						'salt' => Sanitize::escape($salt),
-						'password_date' => @date('Y-m-d H:i:s'),
-						'name' => Input::get('name'),
-						'surname' => Input::get('surname'),
-						'email' => Input::get('email'),
-						'number_phone' => Input::get('number_phone'),
-						'date_birdth' => Input::get('date_birdth'),
-						'city' => Input::get('city'),
-						'street' => Input::get('street'),
-						'no_house' => Input::get('no_house'),
-						'no_flat' => (strlen(Input::get('no_house')) > 0) ? Input::get('no_house') : NULL,
-						'joined' => @date('Y-m-d H:i:s'),
-						'group' => 1,
-						'consent_rodo' => Input::get('consent_rodo')
+						'username' 		=> Input::get('username'),
+						'password' 		=> Hash::make(Input::get('password'), $salt),
+						'salt' 			=> Sanitize::escape($salt),
+						'password_date' => date('Y-m-d H:i:s'),
+						'name' 			=> Input::get('name'),
+						'surname' 		=> Input::get('surname'),
+						'email' 		=> Input::get('email'),
+						'number_phone' 	=> Input::get('number_phone'),
+						'date_birdth' 	=> Input::get('date_birdth'),
+						'city' 			=> Input::get('city'),
+						'street' 		=> Input::get('street'),
+						'no_house' 		=> Input::get('no_house'),
+						'no_flat' 		=> (strlen(Input::get('no_house')) > 0) ? Input::get('no_house') : NULL,
+						'joined' 		=> date('Y-m-d H:i:s'),
+						'group' 		=> 1,
+						'consent_rodo' 	=> Input::get('consent_rodo')
 					));
 
 					$log = 'Username: '. Input::get('username') .' Name: '. Input::get('surname') .' '. Input::get('name') .' E-mail: '. Input::get('email');

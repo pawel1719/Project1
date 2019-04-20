@@ -1,5 +1,6 @@
 <?php
 	require_once 'classes/config.php';
+	require_once PATH_TO_CLASSES_FILE;
 	require_once PATH_TO_CLASSES_INPUT;
 	require_once PATH_TO_CLASSES_LOGS;
 	require_once PATH_TO_CLASSES_SESSION;
@@ -7,6 +8,9 @@
 	require_once PATH_TO_CLASSES_USER;
 	require_once PATH_TO_CLASSES_TOKEN;
 	require_once PATH_TO_CLASSES_DB;
+
+	//save information about visit to file
+	Logs::logsToFile('Visited on page');
 ?>
 <HTML lang="pl=PL">
 <HEAD>

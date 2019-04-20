@@ -8,6 +8,10 @@
     require_once PATH_TO_CLASSES_TOKEN;
     require_once PATH_TO_CLASSES_USER;
 
+    
+    //save information about visit to file
+    Logs::logsToFile('Visited on page');
+    
     $user = new User();
     // redirect if user is not login
     if(!$user->isLoggedIn()) {

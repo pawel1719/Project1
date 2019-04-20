@@ -75,6 +75,13 @@ class Filee {
         }
     }//end function
 
+    public static function textFile($content, $path = 'file.txt') {
+        $handle = fopen($path, "a");
+
+        fwrite($handle, $content . "\n");
+        fclose($handle);
+    }
+
 }//end class
 
 ?>

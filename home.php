@@ -1,8 +1,12 @@
 <?php
 	require_once 'classes/config.php';
+	require_once PATH_TO_CLASSES_LOGS;
+	require_once PATH_TO_CLASSES_SANITIZE;
 	require_once PATH_TO_CLASSES_SESSION;
 	require_once PATH_TO_CLASSES_USER;
-	require_once PATH_TO_CLASSES_SANITIZE;
+
+	//save information about visit to file
+	Logs::logsToFile('Visited on page');
 ?>
 
 <HTML lang="pl-PL">

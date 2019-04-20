@@ -6,6 +6,10 @@
     require_once PATH_TO_UP_UP_CLASSES_TICKET;
     require_once PATH_TO_UP_UP_CLASSES_USER;
 
+    //save information about visit to file
+    $path = '../../files/logs/'. date('Y-m') .'_logi.txt';
+	Logs::logsToFile('Visited on page', $path);
+
     $user = new User();
     // redirect if user is not login
     if(!$user->isLoggedIn()) {

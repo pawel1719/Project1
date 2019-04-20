@@ -4,6 +4,9 @@
 	require_once PATH_TO_CLASSES_SESSION;
 	require_once PATH_TO_CLASSES_USER;
 
+	//save information about visit to file
+	Logs::logsToFile('Visited on page');
+	
 	$user = new User();
 	$user->logout();
 

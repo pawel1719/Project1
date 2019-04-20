@@ -10,6 +10,10 @@
     require_once PATH_TO_CLASSES_TOKEN;
     require_once PATH_TO_CLASSES_USER;
     require_once PATH_TO_CLASSES_VALIDATE;
+
+    //save information about visit to file
+    Logs::logsToFile('Visited on page');
+    
 ?>
 
 <HTML lang="pl-PL">

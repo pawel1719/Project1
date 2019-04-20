@@ -2,10 +2,14 @@
     require_once 'classes/config.php';
     require_once PATH_TO_CLASSES_DB;
     require_once PATH_TO_CLASSES_INPUT;
+    require_once PATH_TO_CLASSES_LOGS;
     require_once PATH_TO_CLASSES_SESSION;
     require_once PATH_TO_CLASSES_TICKET;
     require_once PATH_TO_CLASSES_USER;
 
+    //save information about visit to file
+    Logs::logsToFile('Visited on page');
+    
     $user = new User();
     // redirect if user is not login
     if(!$user->isLoggedIn()) {
