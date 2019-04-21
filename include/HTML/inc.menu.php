@@ -1,5 +1,6 @@
 <?php
 	require_once 'classes/config.php';
+	require_once PATH_TO_CLASSES_SANITIZE;
 	require_once PATH_TO_CLASSES_USER;
 
 	$user = new User();
@@ -37,7 +38,7 @@
 </li>
 <li><a href="changePassword.php">User <?php echo $HTML_user; ?></a>
 		<ul>
-			<li><a href="logout.php">Wyloguj się</a></li>
+			<li><a href="include/PHP/logout.php">Wyloguj się</a></li>
 			<li><a href="updateUser.php">Edytuj profil</a></li>
 			<li><a href="changePassword.php">Zmień hasło</a></li>
 		</ul>

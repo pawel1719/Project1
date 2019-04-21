@@ -165,10 +165,27 @@ CREATE TABLE IF NOT EXISTS comments (
   id_user     INT(11) NOT NULL,
   id_ticket   INT(11) NULL,
   id_device   INT(11) NULL,
+  visibility  INT(1) NOT NULL,
   comment     TEXT NOT NULL,
   date_add    DATETIME NOT NULL,
   ip_address  VARCHAR(18),
   port        VARCHAR(7) NULL,
   user_agent  VARCHAR(255) NULL,
   PRIMARY KEY (ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- ---------------------------------------
+-- Table logs
+-- ---------------------------------------
+CREATE TABLE IF NOT EXISTS logs (
+  ID          INT NOT NULL AUTO_INCREMENT,
+  name_user   VARCHAR(100) NULL,
+  action_log  TEXT NOT NULL,
+  type_log    VARCHAR(20) NULL,
+  link_on_app VARCHAR(120) NULL,
+  address_ip  VARCHAR(12) NOT NULL,
+  port        VARCHAR(7) NOT NULL,
+  user_agent  VARCHAR(255) NOT NULL,
+  date_action DATETIME NOT NULL,
+  PRIMARY KEY(ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;

@@ -14,9 +14,10 @@
 
 </HEAD>
 <BODY>
+
 <?php
 	require_once PATH_TO_MENU;
-
+	
 	$user = new User();
 	//checking that user is logged
 	if(!$user->isLoggedIn()) {
@@ -68,10 +69,13 @@
 				}
 			} else {
 				//show the error for validation 
+				echo '<div class="login__message login__message--alert">';
+
 				foreach($validation->errors() as $error) {
 					echo $error . '<br />';
 				}
-				echo '--------------------------------------------';
+
+				echo '</div>';
 			}
 		}
 	}
@@ -81,16 +85,19 @@
 	}
 
 ?>
+<form method="POST" class="login">
 
-<form method="POST">
-	Stare hasło: <input type="password" placeholder="Stare hasło" name="password_old"/> <br/>
+	<label for="password_old" class="login__label" >Stare hasło:</label>
+	<input type="password" name="password_old" class="login__input" /> <br/>
 
-	Nowe hasło: <input type="password" placeholder="Nowe hasło" name="password_new"/> <br/>
+	<label for="password_new" class="login__label" >Nowe hasło:</label>
+	<input type="password" name="password_new" class="login__input" /> <br/>
 
-	Potwierdź hasło: <input type="password" placeholder="Potwierdź hasło" name="password_new_again"/> <br/
+	<label for="password_new_again" class="login__label" >Potwierdź hasło:</label>
+	<input type="password" name="password_new_again" class="login__input" />
 	
 	<input type="hidden" name="token" value="<?php echo Token::generate(); ?>" />
-	<input type="submit" value="Zmień">
+	<input type="submit" value="Zmień" class="login__button">
 	
 </form>
 

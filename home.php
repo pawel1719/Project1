@@ -22,20 +22,17 @@
 
 
 	if(Session::exist('register') || Session::exist('welcome')) {
-		echo Session::flash('register');
-		echo Session::flash('welcome');
-		echo '<hr/>';
+		echo '<div class="login__message--info">'. Session::flash('register') .'</div>';
+		echo '<div class="login__message--info">'. Session::flash('welcome') .'</div>';
 	} else if(Session::exist(SESSION_NAME)) {
 		//echo Session::get(SESSION_NAME);
 	}
 
 	$user = new User();
 	if($user->isLoggedIn()) {
-		echo '<p>Hello <a href="changePassword.php">'. Sanitize::escape($user->data()->username) .'</a>!</p>';
 		if($user->hasPermission('admin')) {
-			echo 'You are administrator!';
+			echo '<div class="login__message--info">You are administrator!</div>';
 		}
-		echo '<p><a href="logout.php">Wyloguj się</a></p>';
 	} else {
 		Session::flash('user_information', '<p>Musisz się <a href="index.php">zalogować</a> lub <a href="register.php">zarejestrować</a></p>');
 		header('Location: index.php');
