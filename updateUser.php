@@ -149,36 +149,38 @@
 
 ?>
 
-	<form method="POST">
-		Imię: <br/>
-		<input type="text" name="name" value="<?php echo Sanitize::escape($user->data()->name); ?>" /><br/>
+	<form method="POST" class="login">
 
-		Nazwisko: <br/>
-		<input type="text" name="surname" value="<?php echo Sanitize::escape($user->data()->surname); ?>" /><br/>
+		<label for="name" class="login__label">Imię:</label> 
+		<input type="text" name="name" value="<?php echo Sanitize::escape($user->data()->name); ?>" class="login__input" />
 
-		E-mail: <br/>
-		<input type="email" name="email" value="<?php echo Sanitize::escape($user->data()->email); ?>" /><br/>
+		<label for="surname" class="login__label">Nazwisko:</label> 
+		<input type="text" name="surname" value="<?php echo Sanitize::escape($user->data()->surname); ?>" class="login__input" />
 
-		Numer telefonu: <br/>
-		<input type="text" name="number_phone" value="<?php echo Sanitize::escape($user->data()->number_phone); ?>" /><br/>
+		<label for="email" class="login__label">E-mail:</label>
+		<input type="email" name="email" value="<?php echo Sanitize::escape($user->data()->email); ?>" class="login__input" />
 
-		Data urodzenia: <br/>
-		<input type="date" name="date_birdth" value="<?php echo date('Y-m-d'); ?>" /><br/>
+		<label for="number_phone" class="login__label">Numer telefonu:</label>
+		<input type="text" name="number_phone" value="<?php echo Sanitize::escape($user->data()->number_phone); ?>" class="login__input" />
 
-		Miasto: <br/>
-		<input type="text" name="city" value="<?php echo Sanitize::escape($user->data()->city); ?>" /><br/>
+		<label for="date_birdth" class="login__label">Data urodzenia:</label>
+		<input type="date" name="date_birdth" value="<?php echo date('Y-m-d'); ?>" class="login__input" />
 
-		Ulica: <br/>
-		<input type="text" name="street" value="<?php echo Sanitize::escape($user->data()->street); ?>" /><br/>
+		<label for="city" class="login__label">Miasto:</label>
+		<input type="text" name="city" value="<?php echo Sanitize::escape($user->data()->city); ?>" class="login__input" />
 
-		Numer domu: <br/>
-		<input type="text" name="no_house" value="<?php echo Sanitize::escape($user->data()->no_house); ?>" /><br/>
+		<label for="street" class="login__label">Ulica:</label>
+		<input type="text" name="street" value="<?php echo Sanitize::escape($user->data()->street); ?>" class="login__input" />
 
-		Numer mieszkania: <br/>
-		<input type="text" name="no_flat" value="<?php echo Sanitize::escape($user->data()->no_flat); ?>" /><br/><br/>
+		<label for="no_house" class="login__label">Numer domu:</label>
+		<input type="text" name="no_house" value="<?php echo Sanitize::escape($user->data()->no_house); ?>" class="login__input" />
+
+		<label for="no_flat" class="login__label">Numer mieszkania:</label>
+		<input type="text" name="no_flat" value="<?php echo Sanitize::escape($user->data()->no_flat); ?>" class="login__input" />
 
 		<input type="hidden" name="token" value="<?php echo Token::generate(); ?>" />
-		<input type="submit" value="Zapisz" />
+		<input type="submit" value="Zapisz" class="login__button" />
+		
 	</form>
 
 </BODY>

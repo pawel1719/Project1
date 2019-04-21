@@ -1,0 +1,73 @@
+body {
+  width: 100vw;
+  height: 100vh; 
+  color: #000;
+}
+
+/* STYLE FOR MENU */
+ol {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+}
+
+ol a {
+  display:block;
+  text-decoration:none;
+  color:rgb(0, 0, 0);
+  padding:0 5px;
+}
+
+ol > li {
+  float: left;
+  width: 150px;
+  margin-left: 1px;
+  background-color: rgb(211, 236, 170);
+  height: 2em;
+}
+
+ol > li:first-child {
+  margin-left: 0;
+}
+ 
+ol > li:hover {
+  background-color: rgb(172, 197, 133);
+}
+
+ol > li:hover > a {
+  color:rgb(255, 255, 255);
+}
+
+ol > li:hover > ul {
+  display:block;
+}
+
+/* AFTER HOVER */
+ol > li > ul {
+  display: none;
+  list-style-type: none;
+  padding:0;
+  margin: 0;
+}
+
+ol > li > ul > li {
+  position: relative;
+  background-color: rgb(211, 236, 170);
+}
+
+ol > li > ul > li > a {
+  border-top: 1px solid #FFF;
+}
+
+ol > li > ul > li:hover {
+  background-color: rgb(111, 134, 73);
+}
+
+ol > li > ul > li:hover > a {
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+}
