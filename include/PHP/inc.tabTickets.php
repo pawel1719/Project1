@@ -50,36 +50,40 @@
         
         
         //structure table to html
-        echo '<table>
-            <tr>
-                <td>Nr.</td>
-                <td>Temat</td>
-                <td>Opis</td>
-                <td>Piorytet</td>
-                <td>Kolejka</td>
-                <td>Właściciel</td>
-                <td>Data dodania</td>
-                <td>Obsługujący</td>
-                <td>Wiek zgłoszenia</td>
-                <td>Czas realizacji</td>
-            </tr>';
+        echo '<table class="table table-sm table-hover table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Nr.</th>
+                    <th scope="col">Temat</th>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Piorytet</th>
+                    <th scope="col">Kolejka</th>
+                    <th scope="col">Właściciel</th>
+                    <th scope="col">Data dodania</th>
+                    <th scope="col">Obsługujący</th>
+                    <th scope="col">Wiek zgłoszenia</th>
+                    <th scope="col">Czas realizacji</th>
+                </tr>
+            </thead>';
             
             $tickets = new Ticket();
             $data_tickets = $tickets->showDataTickets(1, array( 'no_row' => (int)Input::get('page')-1, 'result_on_page' => (int)Input::get('row')));
             
             for($i=0; $i<count($data_tickets); $i++) {
-                echo '<tr>
-                    <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->id .'</a></td>
-                    <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->subject_ticket .'</a></td>
-                    <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'" title="'. $data_tickets[$i]->desc_ticket .'">'. Action::partText($data_tickets[$i]->desc_ticket, 100) .'</a></td>            
-                    <td>'. $data_tickets[$i]->priority .'</td>
-                    <td>'. $data_tickets[$i]->queue .'</td>
-                    <td>'. $data_tickets[$i]->declarant .'</td>
-                    <td>'. $data_tickets[$i]->date_create .'</td>
-                    <td>'. $data_tickets[$i]->operator .'</td>
-                    <td>'. Action::timeToNow($data_tickets[$i]->date_create) .'</td>
-                    <td>'. Action::timeToNow($data_tickets[$i]->date_acceptance) .'</td>
-                </tr>';
+                echo '<tbody>
+                    <tr>
+                        <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->id .'</a></td>
+                        <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->subject_ticket .'</a></td>
+                        <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'" title="'. $data_tickets[$i]->desc_ticket .'">'. Action::partText($data_tickets[$i]->desc_ticket, 100) .'</a></td>            
+                        <td>'. $data_tickets[$i]->priority .'</td>
+                        <td>'. $data_tickets[$i]->queue .'</td>
+                        <td>'. $data_tickets[$i]->declarant .'</td>
+                        <td>'. $data_tickets[$i]->date_create .'</td>
+                        <td>'. $data_tickets[$i]->operator .'</td>
+                        <td>'. Action::timeToNow($data_tickets[$i]->date_create) .'</td>
+                        <td>'. Action::timeToNow($data_tickets[$i]->date_acceptance) .'</td>
+                    </tr>
+                </tbody>';
             }
             
             echo '</table>';
@@ -90,7 +94,7 @@
             
             
             //LIMIT ROW ON THE PAGE
-            echo 'Pokaż:
+            echo '<label for="row">Pokaż:</label>
             <select name="row" id="ticket_row" onchange="showTable(this.value)" onload="selectValue(\'ticket_row\', this.value)">
                 <option value="5">5</option>
                 <option value="10">10</option>

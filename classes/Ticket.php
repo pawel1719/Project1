@@ -136,7 +136,7 @@ class Ticket {
 			}
 
 			//links to the pages
-			$numbers = '<a href="'. $link . $tmp .'"><button> _'. $tmp .'_ </button></a>' . $numbers;
+			$numbers = '<a href="'. $link . $tmp .'"><button class="btn btn-secondary btn-link">'. $tmp .'</button></a>' . $numbers;
 			$max -= $number_results; //decrements variable
 		}
 		

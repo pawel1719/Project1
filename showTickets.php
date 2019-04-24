@@ -24,7 +24,7 @@
     <script src="JS/ajax.js"></script> 
 
 </HEAD>
-<BODY onLoad="showTable(<?php echo (int)Input::get('row') .','. (int)Input::get('page'); ?>)">
+<BODY onLoad="showTable(<?php echo (int)Input::get('row') .','. (int)Input::get('page'); ?>)" class="body_padding">
 
     <?php   require_once PATH_TO_MENU;  ?>
 

@@ -12,7 +12,7 @@ body{
     align-items: flex-start;
 
     width: 100vw;
-    height: 100vh; 
+	height: 100vh; 
 	background-image:url("./contrast_linen.png");
 	color: #FFF;
 }
@@ -181,4 +181,21 @@ a:hover {
 	.login{        
 		width: 300px;    
 	}
+}
+
+/* ********************* */
+/*  BOOTSTRAP 			 */ 
+/* ********************* */
+.body_padding {
+	padding: 0 100px;
+}
+.table > tbody {
+	font-size: 0.8em;
+}
+.table > tbody > tr > td:nth-child(2n) {
+	font-weight: 700;
+	max-width: 200px;
+}
+.table > tbody > tr > td:nth-child(3n) {
+	max-width: 300px;
 }

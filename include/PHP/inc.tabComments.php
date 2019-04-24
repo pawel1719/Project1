@@ -12,12 +12,14 @@
          header('Location: index.php');
     }
 
-    echo '<TABLE border="1">
-            <tr>    
-                <th>User</th>
-                <th>Content</th>
-                <th>Date</th>
-            </tr>';
+    echo '<TABLE class="table table-striped table-bordered table-hover table-sm table-light">
+            <thead class="thead-dark">
+                <tr>    
+                    <th>User</th>
+                    <th>Content</th>
+                    <th>Date</th>
+                </tr>
+            </thead>';
     
     $ticket_ob = new Ticket();
     $comment = $ticket_ob->getCommentsForTicket(Input::get('id'));
@@ -58,10 +60,10 @@
         }
     }//end foreach
     
-    echo    '<tr>
+    echo    '<tr class="table-info">
                 <td>'. $user->data()->name .' '. $user->data()->surname .'</td>
                 <form method="POST">
-                    <td><textarea name="comment" id="comment" cols="120" placeholder="Wpisz treść komentarza..." ></textarea></td>
+                    <td><textarea name="comment" id="comment" cols="120" placeholder="Wpisz treść komentarza..." class="form-control form-control-sm" ></textarea></td>
                     <td>
                         <select name="visibility" id="visibility">
                             <option value="1" >Ogólny</option>
@@ -71,7 +73,7 @@
                         <input type="hidden" name="user" id="user" value="'. $user->data()->ID .'" >
                         <input type="hidden" name="token" id="token" value="'. Token::generate() .'" >
                         <input type="hidden" name="ticket" id="ticket" value="'. Input::get('id') .'" >
-                        <input type="button" onClick="addCommentAPI()" value="Dodaj">
+                        <input type="button" onClick="addCommentAPI()" value="Dodaj"  class="btn btn-secondary">
                     </td>
                 </form>
             </tr>

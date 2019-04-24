@@ -36,7 +36,7 @@ class Logs {
                         .' USER-AGENT -> '. $_SERVER['HTTP_USER_AGENT'] 
                         .' PROTOCOL -> '. $_SERVER['SERVER_PROTOCOL'] .' '. $_SERVER['SERVER_SOFTWARE'];
         
-        Filee::textFile($text_to_file, $path);
+        // Filee::textFile($text_to_file, $path);
     }
     
 

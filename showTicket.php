@@ -34,7 +34,7 @@
     <script src="JS/ajax.js"></script> 
 
 </HEAD>
-<BODY onLoad="showCommentsAPI(<?php echo (int)$ticket->id; ?>)">
+<BODY onLoad="showCommentsAPI(<?php echo (int)$ticket->id; ?>)" class="body_padding">
 
     <?php   require_once PATH_TO_MENU;  ?>
 
@@ -54,11 +54,14 @@
         $file_name = isset($file_from_db[0]->name) ? $file_from_db[0]->name : '';
         $file_path = isset($file_from_db[0]->path) ? $file_from_db[0]->path : '';
 
-        echo '<table border="1">
-                <tr>   
+        echo '<table class="table table-bordered table-dark">
+            <thead>
+                <tr class="table-active">   
                     <td>Numer zgłoszenia</td> 
                     <td colspan="3">#'.$ticket->id .'</td>
                 </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>Piorytet</td><td>'. $ticket->priority .'</td>
                     <td>Status</td><td>'. $ticket->status .'</td>
@@ -86,6 +89,7 @@
                     <td>Opis: </td>
                     <td colspan="3">'. $ticket->desc_ticket .'</td>
                 </tr>
+            </tbody>
             </table>';
     ?>
     </div>
