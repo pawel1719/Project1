@@ -22,9 +22,16 @@
     if(!is_numeric(Input::get('id'))) {
         header('Location: showTickets.php?row=10&page=1');
     }
+
+	//reutrn one tickets
+	if(preg_match("/^[0-9]{1,}$/", Input::get('id')) === 1) {
+		$syntax = 'WHERE t.ID = ' .Input::get('id');
+	}else{
+		throw new Exception('#80235_'. Input::get('id') .' There was a problem finding ticket');
+	}
         
     $ticket_ob = new Ticket();
-    $ticket = $ticket_ob->showDataTickets(2, array('user_id' => Input::get('id')))[0];
+    $ticket = $ticket_ob->showDataTickets($syntax)[0];
 
 ?>
 <HTML lang="pl=PL">
@@ -42,13 +49,9 @@
     <div id="detailsTicket">
     <?php
 
-        $query = 'SELECT  ID
-                    ,name
-                    ,path
-                    ,date_added
-                    ,id_ticket
-                FROM updatedFiles
-                WHERE id_ticket = '. $ticket->id;
+        $query = 'SELECT  ID, name, path, date_added, id_ticket
+                  FROM    updatedFiles
+                  WHERE   id_ticket = '. $ticket->id;
         $file_from_db = $ticket_ob->showData($query);
 
         $file_name = isset($file_from_db[0]->name) ? $file_from_db[0]->name : '';

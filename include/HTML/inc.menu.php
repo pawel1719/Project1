@@ -11,7 +11,7 @@
 	$HTML_user =  Sanitize::escape($user->data()->username); 
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="#">APP PS</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -23,7 +23,7 @@
       	<li class="nav-item active"><a class="nav-link" href="home.php">Home</a></li>
 	  
 	  	<li class="nav-item active">
-			<a class="nav-link dropdown-toggle" href="showTickets.php?row=10&page=1" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<a class="nav-link dropdown-toggle" href="showTickets.php?data=tickets&row=10&page=1" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				Zgłoszenia
 			</a>
 			<div class="dropdown-menu" aria-labelledby="navbarDropdown">

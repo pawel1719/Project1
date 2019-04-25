@@ -29,12 +29,13 @@ class Logs {
         $text_to_file = '['. date('Y-m-d H:i:s') .'] '. 
                         $_SERVER['REMOTE_ADDR'] .':'. $_SERVER['REMOTE_PORT'] 
                         .' -- '. $text_to_file
-                        .' -- FILE '. $_SERVER['PHP_SELF'] 
+                        .' -- '. $_SERVER['REQUEST_METHOD'] .' '. $_SERVER['SERVER_PROTOCOL']
+                        .' FILE '. $_SERVER['PHP_SELF'] 
                         .' PHP_SESSION_ID '. session_id()
                         .' HTTP_REFERER -> '. $ref
                         .' REQUEST_URI ->'. $_SERVER['REQUEST_URI']
                         .' USER-AGENT -> '. $_SERVER['HTTP_USER_AGENT'] 
-                        .' PROTOCOL -> '. $_SERVER['SERVER_PROTOCOL'] .' '. $_SERVER['SERVER_SOFTWARE'];
+                        .' PROTOCOL -> '. $_SERVER['SERVER_SOFTWARE'];
         
         // Filee::textFile($text_to_file, $path);
     }

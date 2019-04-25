@@ -38,15 +38,27 @@
                 Input::set('row', 15);
             break;
         }
-        
-        /*
-        //set number page
-        if(preg_match("/^[0-9]{1,}$/",Input::get('page'))) {
-            Input::set('page', (int)Input::get('page'));
-        }else{
-            Input::set('page', (int)10);
+
+        //data to showTickets
+        $data           = (preg_match("/^[a-z]{1,}$/", Input::get('data')) === 1) ? Input::get('data') : '';
+        $number_page    = is_numeric(Input::get('page')) ? Input::get('page') : 1;
+        $result_on_page = is_numeric(Input::get('row'))  ? Input::get('row') : 10;
+
+        switch($data) {
+            case 'tickets' :
+                //return all tickets
+                $syntax = 'WHERE t.ID <= ((SELECT MAX(ID) max_row FROM ticket) - '. ($number_page * $result_on_page) .')
+                           ORDER BY ID DESC
+                           LIMIT '. $result_on_page;
+            break;
+            case 'new_tickets' :
+				//return all new tickets
+				$syntax = 'WHERE t.ID <= ((SELECT MAX(ID) max_row FROM ticket) - '. ($number_page * $result_on_page) .') AND id_operator_ticket IS NULL
+				 	       ORDER BY ID DESC
+				 	       LIMIT '. $result_on_page;
+			break;
+            default:    $syntax = 'ID = 1';
         }
-        */
         
         
         //structure table to html
@@ -67,42 +79,42 @@
             </thead>';
             
             $tickets = new Ticket();
-            $data_tickets = $tickets->showDataTickets(1, array( 'no_row' => (int)Input::get('page')-1, 'result_on_page' => (int)Input::get('row')));
+            $data_tickets = $tickets->showDataTickets($syntax);
             
             for($i=0; $i<count($data_tickets); $i++) {
                 echo '<tbody>
-                    <tr>
-                        <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->id .'</a></td>
-                        <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->subject_ticket .'</a></td>
-                        <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'" title="'. $data_tickets[$i]->desc_ticket .'">'. Action::partText($data_tickets[$i]->desc_ticket, 100) .'</a></td>            
-                        <td>'. $data_tickets[$i]->priority .'</td>
-                        <td>'. $data_tickets[$i]->queue .'</td>
-                        <td>'. $data_tickets[$i]->declarant .'</td>
-                        <td>'. $data_tickets[$i]->date_create .'</td>
-                        <td>'. $data_tickets[$i]->operator .'</td>
-                        <td>'. Action::timeToNow($data_tickets[$i]->date_create) .'</td>
-                        <td>'. Action::timeToNow($data_tickets[$i]->date_acceptance) .'</td>
-                    </tr>
-                </tbody>';
+                        <tr>
+                            <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->id .'</a></td>
+                            <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'">'. $data_tickets[$i]->subject_ticket .'</a></td>
+                            <td><a href="showTicket.php?id='. $data_tickets[$i]->id .'" title="'. $data_tickets[$i]->desc_ticket .'">'. Action::partText($data_tickets[$i]->desc_ticket, 100) .'</a></td>            
+                            <td>'. $data_tickets[$i]->priority .'</td>
+                            <td>'. $data_tickets[$i]->queue .'</td>
+                            <td>'. $data_tickets[$i]->declarant .'</td>
+                            <td>'. $data_tickets[$i]->date_create .'</td>
+                            <td>'. $data_tickets[$i]->operator .'</td>
+                            <td>'. Action::timeToNow($data_tickets[$i]->date_create) .'</td>
+                            <td>'. Action::timeToNow($data_tickets[$i]->date_acceptance) .'</td>
+                        </tr>
+                    </tbody>';
             }
-            
+
             echo '</table>';
             
             //pages to table
-            $link = 'showTickets.php?row='.Input::get('row').'&page=';
+            $link = 'showTickets.php?data=tickets&row='.Input::get('row').'&page=';
             echo $tickets->numberPages($link, (int)Input::get('page'), (int)Input::get('row'), 5);
             
             
             //LIMIT ROW ON THE PAGE
             echo '<label for="row">Pokaż:</label>
-            <select name="row" id="ticket_row" onchange="showTable(this.value)" onload="selectValue(\'ticket_row\', this.value)">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-            </select>';
+                    <select name="row" id="ticket_row" onchange="showTable(\'tickets\', this.value)" onload="selectValue(\'ticket_row\', this.value)">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>';
 
         }else{
             Logs::log($user->data()->username, 'Unauthorized access to page', 'Alert security');

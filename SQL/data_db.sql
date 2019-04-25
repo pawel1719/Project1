@@ -8,11 +8,11 @@
 -- --------------------------------------------
 -- Query adding data to table ticketPriority
 -- --------------------------------------------
-INSERT INTO groups (ID, name )
+INSERT INTO groups (ID, name, permission )
 VALUES
-(1, 'Administrators'),
-(2, 'IT'),
-(3, 'User');
+(1, 'Administrators', '{"tickets":{"all":1,"group":1,"self":1},"add_comment":{"all": 1,"group":1,"self":1}}'),
+(2, 'IT', '{"tickets":{"all":1,"group":1,"self":1},"add_comment":{"all": 1,"group":1,"self":1}}'),
+(3, 'User', '{"tickets":{"all":0,"group":0,"self":1},"add_comment":{"all":0,"group":0,"self":1}}');
 
 -- --------------------------------------------
 -- Query adding data to table ticketPriority

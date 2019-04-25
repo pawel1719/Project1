@@ -118,13 +118,17 @@ class User {
 		}
 	}//end function passwordHistory
 
-	public function hasPermission($key) {
+	public function hasPermission($object = NULL, $permissions = NULL) {
 		$group = $this->_db->get('groups', array('ID', '=', $this->data()->group));
 		if($group->count()) {
+			//convert json to array PHP
 			$permission = json_decode($group->results()[0]->permission, true);
 
-			if($permission[$key] == true){
-				return true;
+			//checking permission form DB 
+			if(isset($permission[$object][$permissions])) {
+				if($permission[$object][$permissions] === true || $permission[$object][$permissions] === 1) return true;
+			}else if(isset($permission[$object])) {
+				if($permission[$object] === true || $permission[$object] === 1) return true;
 			}
 		}
 

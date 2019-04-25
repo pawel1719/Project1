@@ -68,7 +68,7 @@
             });
     }
 
-    function showTable(row, page) {
+    function showTable(_case, row, page) {
         if (row.length == 0) { 
             document.getElementById("tableTickets").innerHTML = "Error";
             return;
@@ -81,14 +81,14 @@
                 }
             };
 
-            let link = "include/PHP/inc.tabTickets.php?id=3&page=" + page + "&row=" + row;
+            let link = "include/PHP/inc.tabTickets.php?data=" + _case + "&id=3&page=" + page + "&row=" + row;
             
             xmlhttp.open("GET", link, true);
             xmlhttp.send();
         }
     }
 
-    function showTableAPI(row, page) {
+    function showTableAPI(_case, row, page) {
         const ourHeaders = new Headers();
 
         //dodajemy dodatkowe nagłówki
@@ -98,7 +98,7 @@
         fetch("include/PHP/inc.tabTickets.php", {
             method: "GET",
             //headers: ourHeaders,
-            body: "id=3&row=" + row + "&page=" + page
+            body: "data=" + _case + "3&row=" + row + "&page=" + page
         })
         .then(res => res.text())
         .then(res => {

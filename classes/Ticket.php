@@ -46,24 +46,7 @@ class Ticket {
 		return $this->_db->query($query)->results();
 	}//end
 
-	public function showDataTickets($case, $variables = array( 'no_row' => 0, 'result_on_page' => 10)) {
-		switch($case) {
-			case 1 :
-				//return all tickets
-				$syntax = 'WHERE t.ID <= ((SELECT MAX(ID) max_row FROM ticket) - '. ($variables['no_row']*$variables['result_on_page']) .')
-				 			ORDER BY ID DESC
-				 			LIMIT '. $variables['result_on_page'];
-			break;
-			case 2 :
-				//reutrn one tickets
-				if(preg_match("/^[0-9]{1,}$/", $variables['user_id']) === 1) {
-					$syntax = 'WHERE t.ID = ' .$variables['user_id'];
-				}else{
-					throw new Exception('#80235_'. $variables['user_id'] .' There was a problem finding user');
-				}
-			break;
-			default: $syntax = '';
-		}
+	public function showDataTickets($syntax = 'ID=1') {
 		$this->_data = $this->_db->query('
 					SELECT 	 t.`ID` id
 							,t.`subject` subject_ticket
