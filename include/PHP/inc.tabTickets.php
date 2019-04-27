@@ -40,26 +40,47 @@
         }
 
         //data to showTickets
-        $data           = (preg_match("/^[a-z]{1,}$/", Input::get('data')) === 1) ? Input::get('data') : '';
+        $data           = (preg_match("/^[a-z_]{1,}$/", trim(Input::get('data'))) === 1) ? trim(Input::get('data')) : '';
         $number_page    = is_numeric(Input::get('page')) ? Input::get('page') : 1;
         $result_on_page = is_numeric(Input::get('row'))  ? Input::get('row') : 10;
+
+        
+        // //PERMISSION TO SEE TICKETS
+        if($user->hasPermission('tickets', 'self')) {
+            //ticket create from logged user
+            $permission = ' AND t.id_declarant = '. $user->data()->ID;
+
+        }else if($user->hasPermission('tickets', 'group')) {
+            //ticket for group where user was added
+            $permission = ' AND u.group = '. $user->data()->group;
+        
+        }else if($user->hasPermission('tickets', 'all')) {
+            //all ticket
+            $permission = ''; 
+        
+        }else {
+            //return infromation about error
+            Logs::logsToFile('#23150 Undefined permission');
+            Logs::log($user->data()->ID, '#23150 Undefined permission', 'Error security');
+            throw new Exception('#23150 Error permision');
+        }
+
 
         switch($data) {
             case 'tickets' :
                 //return all tickets
-                $syntax = 'WHERE t.ID <= ((SELECT MAX(ID) max_row FROM ticket) - '. ($number_page * $result_on_page) .')
-                           ORDER BY ID DESC
+                $syntax = 'WHERE t.id <= ((SELECT MAX(ID) max_row FROM ticket) - '. (($number_page-1) * $result_on_page) .')'. $permission .'
+                           ORDER BY id DESC
                            LIMIT '. $result_on_page;
             break;
             case 'new_tickets' :
-				//return all new tickets
-				$syntax = 'WHERE t.ID <= ((SELECT MAX(ID) max_row FROM ticket) - '. ($number_page * $result_on_page) .') AND id_operator_ticket IS NULL
-				 	       ORDER BY ID DESC
-				 	       LIMIT '. $result_on_page;
-			break;
-            default:    $syntax = 'ID = 1';
-        }
-        
+                //return all new tickets
+                $syntax = 'WHERE t.ID <= ((SELECT MAX(ID) max_row FROM ticket) - '. (($number_page-1) * $result_on_page) .') AND t.id_operator_ticket IS NULL'. $permission .'
+                           ORDER BY t.ID DESC
+                           LIMIT '. $result_on_page;
+            break;
+            default: throw new Exception('Unknow data ');
+        }   
         
         //structure table to html
         echo '<table class="table table-sm table-hover table-dark">
@@ -98,23 +119,23 @@
                     </tbody>';
             }
 
-            echo '</table>';
+            echo '</table><div>';
             
             //pages to table
-            $link = 'showTickets.php?data=tickets&row='.Input::get('row').'&page=';
-            echo $tickets->numberPages($link, (int)Input::get('page'), (int)Input::get('row'), 5);
+            $link = 'showTickets.php?data='. $data .'&row='. $result_on_page .'&page=';
+            echo $tickets->numberPages($link, $number_page, $result_on_page, $syntax, 5);
             
             
             //LIMIT ROW ON THE PAGE
             echo '<label for="row">Pokaż:</label>
-                    <select name="row" id="ticket_row" onchange="showTable(\'tickets\', this.value)" onload="selectValue(\'ticket_row\', this.value)">
+                    <select name="row" class="form-control form-control-sm size_for_option_list btn-secondary btn-link" id="ticket_row" onchange="showTable(\'tickets\', this.value)" onload="selectValue(\'ticket_row\', this.value)">
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
-                    </select>';
+                    </select> </div>';
 
         }else{
             Logs::log($user->data()->username, 'Unauthorized access to page', 'Alert security');

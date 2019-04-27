@@ -46,13 +46,14 @@ class Ticket {
 		return $this->_db->query($query)->results();
 	}//end
 
-	public function showDataTickets($syntax = 'ID=1') {
+	public function showDataTickets($syntax = 'id=1') {
 		$this->_data = $this->_db->query('
 					SELECT 	 t.`ID` id
 							,t.`subject` subject_ticket
 							,t.`description` desc_ticket
 							,t.`id_declarant` id_declarant_ticket
 							,CONCAT(u.name, " ", u.surname) declarant
+							,u.group group_user
 							,t.`id_operator_ticket` id_operator
 							,CONCAT(u2.name, " ", u2.surname) operator
 							,t.`id_ticketStatus` id_status
@@ -79,15 +80,15 @@ class Ticket {
 		return $this->_data;
 	}
 
-	public function numberPages($link, $actual_page, $number_results = 10, $show_number = 5) {
+	public function numberPages($link, $actual_page, $number_results = 10, $where = '', $show_number = 5) {
 		//checking type of value, if isnt numeric set a default value of fucntion
 		$actual_page 	= (is_numeric($actual_page)) 	? $actual_page 		: 1;
 		$number_results = (is_numeric($number_results)) ? $number_results 	: 10;
 		$show_number 	= (is_numeric($show_number)) 	? $show_number 		: 5;
 		
 		//number of rows from db
-		$this->_data = $this->_db->query('SELECT COUNT(ID) row FROM ticket')->results();
-		$max = $this->_data[0]->row;
+		$this->_data = $this->_db->query('SELECT COUNT(ID) row FROM ticket '. $where)->results();
+		$max = (!empty($this->_data[0]->row)) ? $this->_data[0]->row : 0;
 		$max = ($max%$number_results !== 0) ? ($max+$number_results) : $max;
 		$numbers = '';
 

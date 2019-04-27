@@ -27,7 +27,8 @@
 				Zgłoszenia
 			</a>
 			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				<a class="dropdown-item" href="showTickets.php?row=10&page=1">Lista zgłoszeń</a>
+				<a class="dropdown-item" href="showTickets.php?data=new_tickets&row=10&page=1">Nowe zgłoszenia</a>
+				<a class="dropdown-item" href="showTickets.php?data=tickets&row=10&page=1">Wszystkie zgłoszenia</a>
 				<a class="dropdown-item" href="addTicket.php">Dodaj zgłoszenie</a>
 			</div>
 		</li>

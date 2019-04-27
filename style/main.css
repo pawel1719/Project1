@@ -199,3 +199,7 @@ a:hover {
 .table > tbody > tr > td:nth-child(3n) {
 	max-width: 300px;
 }
+.size_for_option_list {
+	width: 60px;
+	display: inline;
+}
