@@ -1,6 +1,7 @@
 <?php
 	require_once 'classes/config.php';
 	require_once PATH_TO_CLASSES_LOGS;
+	require_once PATH_TO_CLASSES_DB;
 	require_once PATH_TO_CLASSES_SANITIZE;
 	require_once PATH_TO_CLASSES_SESSION;
 	require_once PATH_TO_CLASSES_USER;
@@ -29,11 +30,12 @@
 	}
 
 	$user = new User();
+
 	if($user->isLoggedIn()) {
-		if($user->hasPermission('tickets', 'all')) {
-			echo '<div class="login__message--info">You are administrator!</div>';
+		if($user->hasPermission('tickets')) {
+			echo '<div class="login__message--info">You are '. $user->getNameGroup($user->data()->group) .'!</div>';
 		}else{
-			echo '<div class="login__message--info">You are not administrator!</div>';
+			echo '<div class="login__message--info">Uncorrect group for '. $user->data()->username .'!</div>';
 		}
 	} else {
 		Session::flash('user_information', '<p>Musisz się <a href="index.php">zalogować</a> lub <a href="register.php">zarejestrować</a></p>');

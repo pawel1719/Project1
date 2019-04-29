@@ -43,7 +43,21 @@
 				<a class="dropdown-item" href="listQuestion.php">Lista pytań</a>
 				<a class="dropdown-item" href="randomQuestion.php">Random Question</a>
 			</div>
-		</li>
+			</li>
+
+			<?php
+				 if($user->hasPermission('users page', 'show')) {
+					 echo '
+							<li class="nav-item active">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      				   		Użytkownicy
+      				  </a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="users.php">Lista</a>
+								</div>
+							</li>';
+				 }
+				?>
 
 		<li class="nav-item active">
         	<a class="nav-link dropdown-toggle" href="changePassword.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

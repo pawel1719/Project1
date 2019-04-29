@@ -127,13 +127,20 @@ class User {
 			//checking permission form DB 
 			if(isset($permission[$object][$permissions])) {
 				if($permission[$object][$permissions] === true || $permission[$object][$permissions] === 1) return true;
+			
 			}else if(isset($permission[$object])) {
-				if($permission[$object] === true || $permission[$object] === 1) return true;
+				if(isset($permission[$object]) === true || isset($permission[$object]) === 1) return true;
 			}
 		}
 
 		return false;
 	}//end function hasPermission
+
+	public function getNameGroup($id) {
+		$group = $this->_db->get('groups', array('ID', '=', $id))->results()[0];
+
+		return $group->name;
+	}
 
 	public function logout() {
 		return Session::delete($this->_sessionName);
